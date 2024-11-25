@@ -1,0 +1,20 @@
+{
+    "name": "purescript-cardano-data-lite",
+    "type": "module",
+    "scripts": {
+        "test": "spago test"
+    },
+    "dependencies": {
+        "@mlabs-haskell/json-bigint": "^2.0.0",
+        "@mlabs-haskell/cardano-data-lite": "https://github.com/mlabs-haskell/cardano-data-lite.git#48f44ced7d0377ce52098d45aedc7e3563043706",
+        "@aws-crypto/crc32": "^5.2.0",
+        "@noble/ed25519": "^2.1.0",
+        "@noble/hashes": "^1.5.0",
+        "bech32": "^2.0.0",
+        "tweetnacl": "^1.0.3"
+    },
+    "prettier": {
+        "arrowParens": "avoid",
+        "trailingComma": "none"
+    }
+}
