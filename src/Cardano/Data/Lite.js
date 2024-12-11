@@ -13,9 +13,21 @@ function errorableToPurs(f, ...vars) {
   }
 }
 
+
+// Pass in a function and its list of arguments, that is expected to return undefined, wraps in Either
+// eslint-disable-next-line no-unused-vars
+function undefinedToPurs(f, ...vars) {
+  const value = f(...vars);
+  if (value === undefined) {
+    return null;
+  } else {
+    return value;
+  }
+}
+
 // Address
 export const address_kind = self => self.kind.bind(self)();
-export const address_paymentCred = self => self.payment_cred.bind(self)();
+export const address_paymentCred = self => undefinedToPurs(self.payment_cred.bind(self));
 export const address_isMalformed = self => self.is_malformed.bind(self)();
 export const address_toBech32 = self => prefix =>
   self.to_bech32.bind(self)(prefix);
@@ -30,8 +42,7 @@ export const anchor_new = anchor_url => anchor_data_hash =>
   CDL.Anchor.new(anchor_url, anchor_data_hash);
 
 // AnchorDataHash
-export const anchorDataHash_toBech32 = self => prefix =>
-  self.to_bech32.bind(self)(prefix);
+export const anchorDataHash_toBech32 = self => prefix => errorableToPurs(self.to_bech32.bind(self), prefix);
 export const anchorDataHash_fromBech32 = bech_str =>
   errorableToPurs(CDL.AnchorDataHash.from_bech32, bech_str);
 
@@ -71,7 +82,7 @@ export const auxiliaryDataHash_fromBech32 = bech_str =>
 
 // BaseAddress
 export const baseAddress_new = network => payment => stake =>
-  CDL.BaseAddress.new(network, payment, stake);
+  new CDL.BaseAddress(network, payment, stake);
 export const baseAddress_paymentCred = self => self.payment_cred.bind(self)();
 export const baseAddress_stakeCred = self => self.stake_cred.bind(self)();
 export const baseAddress_toAddress = self => self.to_address.bind(self)();
@@ -191,8 +202,6 @@ export const certificate_newPoolRegistration = pool_registration =>
   CDL.Certificate.new_pool_registration(pool_registration);
 export const certificate_newPoolRetirement = pool_retirement =>
   CDL.Certificate.new_pool_retirement(pool_retirement);
-export const certificate_newGenesisKeyDelegation = genesis_key_delegation =>
-  CDL.Certificate.new_genesis_key_delegation(genesis_key_delegation);
 export const certificate_newMoveInstantaneousRewardsCert =
   move_instantaneous_rewards_cert =>
     CDL.Certificate.new_move_instantaneous_rewards_cert(
@@ -428,27 +437,27 @@ export const dRepUpdate_hasScriptCredentials = self =>
 // DRepVotingThresholds
 export const dRepVotingThresholds_new =
   motion_no_confidence =>
-  committee_normal =>
-  committee_no_confidence =>
-  update_constitution =>
-  hard_fork_initiation =>
-  pp_network_group =>
-  pp_economic_group =>
-  pp_technical_group =>
-  pp_governance_group =>
-  treasury_withdrawal =>
-    CDL.DRepVotingThresholds.new(
-      motion_no_confidence,
-      committee_normal,
-      committee_no_confidence,
-      update_constitution,
-      hard_fork_initiation,
-      pp_network_group,
-      pp_economic_group,
-      pp_technical_group,
-      pp_governance_group,
-      treasury_withdrawal
-    );
+    committee_normal =>
+      committee_no_confidence =>
+        update_constitution =>
+          hard_fork_initiation =>
+            pp_network_group =>
+              pp_economic_group =>
+                pp_technical_group =>
+                  pp_governance_group =>
+                    treasury_withdrawal =>
+                      CDL.DRepVotingThresholds.new(
+                        motion_no_confidence,
+                        committee_normal,
+                        committee_no_confidence,
+                        update_constitution,
+                        hard_fork_initiation,
+                        pp_network_group,
+                        pp_economic_group,
+                        pp_technical_group,
+                        pp_governance_group,
+                        treasury_withdrawal
+                      );
 export const dRepVotingThresholds_setMotionNoConfidence =
   self => motion_no_confidence => () =>
     self.set_motion_no_confidence.bind(self)(motion_no_confidence);
@@ -810,12 +819,6 @@ export const mintAssets_new = () => CDL.MintAssets.new();
 export const mintAssets_newFromEntry = key => value =>
   CDL.MintAssets.new_from_entry(key, value);
 
-// MintWitness
-export const mintWitness_newNativeScript = native_script =>
-  CDL.MintWitness.new_native_script(native_script);
-export const mintWitness_newPlutusScript = plutus_script => redeemer =>
-  CDL.MintWitness.new_plutus_script(plutus_script, redeemer);
-
 // MintsAssets
 export const mintsAssets_new = CDL.MintsAssets.new();
 
@@ -996,12 +999,11 @@ export const plutusData_newInteger = integer =>
   CDL.PlutusData.new_integer(integer);
 export const plutusData_newBytes = bytes => CDL.PlutusData.new_bytes(bytes);
 export const plutusData_kind = self => self.kind.bind(self)();
-export const plutusData_asConstrPlutusData = self =>
-  self.as_constr_plutus_data.bind(self)();
-export const plutusData_asMap = self => self.as_map.bind(self)();
-export const plutusData_asList = self => self.as_list.bind(self)();
-export const plutusData_asInteger = self => self.as_integer.bind(self)();
-export const plutusData_asBytes = self => self.as_bytes.bind(self)();
+export const plutusData_asConstrPlutusData = self => errorableToPurs(self.as_constr_plutus_data.bind(self));
+export const plutusData_asMap = self => errorableToPurs(self.as_map.bind(self));
+export const plutusData_asList = self => errorableToPurs(self.as_list.bind(self));
+export const plutusData_asInteger = self => errorableToPurs(self.as_integer.bind(self));
+export const plutusData_asBytes = self => errorableToPurs(self.as_bytes.bind(self));
 export const plutusData_fromAddress = address =>
   CDL.PlutusData.from_address(address);
 export const plutusData_asAddress = self => network =>
@@ -1018,57 +1020,13 @@ export const plutusMapValues_new = CDL.PlutusMapValues.new();
 
 // PlutusScript
 export const plutusScript_new = bytes => CDL.PlutusScript.new(bytes);
-export const plutusScript_newV2 = bytes => CDL.PlutusScript.new_v2(bytes);
-export const plutusScript_newV3 = bytes => CDL.PlutusScript.new_v3(bytes);
-export const plutusScript_newWithVersion = bytes => language =>
-  CDL.PlutusScript.new_with_version(bytes, language);
 export const plutusScript_bytes = self => self.bytes.bind(self)();
-export const plutusScript_fromBytesV2 = bytes =>
-  CDL.PlutusScript.from_bytes_v2(bytes);
-export const plutusScript_fromBytesV3 = bytes =>
-  CDL.PlutusScript.from_bytes_v3(bytes);
-export const plutusScript_fromBytesWithVersion = bytes => language =>
-  CDL.PlutusScript.from_bytes_with_version(bytes, language);
-export const plutusScript_fromHexWithVersion = hex_str => language =>
-  CDL.PlutusScript.from_hex_with_version(hex_str, language);
-export const plutusScript_hash = self => self.hash.bind(self)();
-export const plutusScript_languageVersion = self =>
-  self.language_version.bind(self)();
-
-// PlutusScriptSource
-export const plutusScriptSource_new = script =>
-  CDL.PlutusScriptSource.new(script);
-export const plutusScriptSource_newRefInput =
-  script_hash => input => lang_ver => script_size =>
-    CDL.PlutusScriptSource.new_ref_input(
-      script_hash,
-      input,
-      lang_ver,
-      script_size
-    );
-export const plutusScriptSource_setRequiredSigners = self => key_hashes => () =>
-  self.set_required_signers.bind(self)(key_hashes);
-export const plutusScriptSource_getRefScriptSize = self =>
-  self.get_ref_script_size.bind(self)();
+export const plutusScript_fromBytes = bytes => errorableToPurs(CDL.PlutusScript.from_bytes(bytes));
+export const plutusScript_fromHex = hex_str => errorableToPurs(CDL.PlutusScript.from_hex, hex_str);
+export const plutusScript_hash = self => number => self.hash(number);
 
 // PlutusScripts
 export const plutusScripts_new = () => CDL.PlutusScripts.new();
-
-// PlutusWitness
-export const plutusWitness_new = script => datum => redeemer =>
-  CDL.PlutusWitness.new(script, datum, redeemer);
-export const plutusWitness_newWithRef = script => datum => redeemer =>
-  CDL.PlutusWitness.new_with_ref(script, datum, redeemer);
-export const plutusWitness_newWithoutDatum = script => redeemer =>
-  CDL.PlutusWitness.new_without_datum(script, redeemer);
-export const plutusWitness_newWithRefWithoutDatum = script => redeemer =>
-  CDL.PlutusWitness.new_with_ref_without_datum(script, redeemer);
-export const plutusWitness_script = self => self.script.bind(self)();
-export const plutusWitness_datum = self => self.datum.bind(self)();
-export const plutusWitness_redeemer = self => self.redeemer.bind(self)();
-
-// PlutusWitnesses
-export const plutusWitnesses_new = () => CDL.PlutusWitnesses.new();
 
 // Pointer
 export const pointer_new = slot => tx_index => cert_index =>
@@ -1121,25 +1079,25 @@ export const poolParams_relays = self => self.relays.bind(self)();
 export const poolParams_poolMetadata = self => self.pool_metadata.bind(self)();
 export const poolParams_new =
   operator =>
-  vrf_keyhash =>
-  pledge =>
-  cost =>
-  margin =>
-  reward_account =>
-  pool_owners =>
-  relays =>
-  pool_metadata =>
-    CDL.PoolParams.new(
-      operator,
-      vrf_keyhash,
-      pledge,
-      cost,
-      margin,
-      reward_account,
-      pool_owners,
-      relays,
-      pool_metadata
-    );
+    vrf_keyhash =>
+      pledge =>
+        cost =>
+          margin =>
+            reward_account =>
+              pool_owners =>
+                relays =>
+                  pool_metadata =>
+                    CDL.PoolParams.new(
+                      operator,
+                      vrf_keyhash,
+                      pledge,
+                      cost,
+                      margin,
+                      reward_account,
+                      pool_owners,
+                      relays,
+                      pool_metadata
+                    );
 
 // PoolRegistration
 export const poolRegistration_poolParams = self =>
@@ -1157,17 +1115,17 @@ export const poolRetirement_new = pool_keyhash => epoch =>
 // PoolVotingThresholds
 export const poolVotingThresholds_new =
   motion_no_confidence =>
-  committee_normal =>
-  committee_no_confidence =>
-  hard_fork_initiation =>
-  security_relevant_threshold =>
-    CDL.PoolVotingThresholds.new(
-      motion_no_confidence,
-      committee_normal,
-      committee_no_confidence,
-      hard_fork_initiation,
-      security_relevant_threshold
-    );
+    committee_normal =>
+      committee_no_confidence =>
+        hard_fork_initiation =>
+          security_relevant_threshold =>
+            CDL.PoolVotingThresholds.new(
+              motion_no_confidence,
+              committee_normal,
+              committee_no_confidence,
+              hard_fork_initiation,
+              security_relevant_threshold
+            );
 export const poolVotingThresholds_motionNoConfidence = self =>
   self.motion_no_confidence.bind(self)();
 export const poolVotingThresholds_committeeNormal = self =>
@@ -1466,8 +1424,12 @@ export const scriptPubkey_new = addr_keyhash =>
 // ScriptRef
 export const scriptRef_newNativeScript = native_script =>
   CDL.ScriptRef.new_native_script(native_script);
-export const scriptRef_newPlutusScript = plutus_script =>
-  CDL.ScriptRef.new_plutus_script(plutus_script);
+export const scriptRef_newPlutusScript_v1 = plutus_script =>
+  CDL.ScriptRef.new_plutus_script_v1(plutus_script);
+export const scriptRef_newPlutusScript_v2 = plutus_script =>
+  CDL.ScriptRef.new_plutus_script_v2(plutus_script);
+export const scriptRef_newPlutusScript_v3 = plutus_script =>
+  CDL.ScriptRef.new_plutus_script_v1(plutus_script);
 export const scriptRef_isNativeScript = self =>
   self.is_native_script.bind(self)();
 export const scriptRef_isPlutusScript = self =>
@@ -1788,11 +1750,12 @@ export const transactionWitnessSet_setBootstraps = self => bootstraps => () =>
   self.set_bootstraps.bind(self)(bootstraps);
 export const transactionWitnessSet_bootstraps = self =>
   self.bootstraps.bind(self)();
-export const transactionWitnessSet_setPlutusScripts =
-  self => plutus_scripts => () =>
-    self.set_plutus_scripts.bind(self)(plutus_scripts);
-export const transactionWitnessSet_plutusScripts = self =>
-  self.plutus_scripts.bind(self)();
+export const transactionWitnessSet_setPlutusScripts_v1 = self => plutus_scripts => () => self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
+export const transactionWitnessSet_setPlutusScripts_v2 = self => plutus_scripts => () => self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
+export const transactionWitnessSet_setPlutusScripts_v3 = self => plutus_scripts => () => self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
+export const transactionWitnessSet_plutusScripts_v1 = self => undefinedToPurs(self.plutus_scripts_v1.bind(self));
+export const transactionWitnessSet_plutusScripts_v2 = self => undefinedToPurs(self.plutus_scripts_v2.bind(self));
+export const transactionWitnessSet_plutusScripts_v3 = self => undefinedToPurs(self.plutus_scripts_v3.bind(self));
 export const transactionWitnessSet_setPlutusData = self => plutus_data => () =>
   self.set_plutus_data.bind(self)(plutus_data);
 export const transactionWitnessSet_plutusData = self =>
@@ -1938,7 +1901,7 @@ export const voter_newConstitutionalCommitteeHotCredential = cred =>
 export const voter_newDrepCredential = cred =>
   CDL.Voter.new_drep_credential(cred);
 export const voter_newStakePoolKeyHash = key_hash =>
-  CDL.Voter.new_stake_pool_key_hash(key_hash);
+  CDL.Voter.new_staking_pool_key_hash(key_hash);
 export const voter_kind = self => self.kind.bind(self)();
 export const voter_toConstitutionalCommitteeHotCredential = self =>
   self.to_constitutional_committee_hot_credential.bind(self)();

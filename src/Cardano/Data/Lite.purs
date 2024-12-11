@@ -99,7 +99,6 @@ module Cardano.Data.Lite
   , certificate_newStakeDelegation
   , certificate_newPoolRegistration
   , certificate_newPoolRetirement
-  , certificate_newGenesisKeyDelegation
   , certificate_newMoveInstantaneousRewardsCert
   , certificate_newCommitteeHotAuth
   , certificate_newCommitteeColdResign
@@ -354,8 +353,6 @@ module Cardano.Data.Lite
   , mint_asNegativeMultiasset
   , mintAssets_new
   , mintAssets_newFromEntry
-  , mintWitness_newNativeScript
-  , mintWitness_newPlutusScript
   , mintsAssets_new
   , moveInstantaneousReward_newToOtherPot
   , moveInstantaneousReward_newToStakeCreds
@@ -446,29 +443,11 @@ module Cardano.Data.Lite
   , plutusMap_new
   , plutusMapValues_new
   , plutusScript_new
-  , plutusScript_newV2
-  , plutusScript_newV3
-  , plutusScript_newWithVersion
   , plutusScript_bytes
-  , plutusScript_fromBytesV2
-  , plutusScript_fromBytesV3
-  , plutusScript_fromBytesWithVersion
-  , plutusScript_fromHexWithVersion
+  , plutusScript_fromBytes
+  , plutusScript_fromHex
   , plutusScript_hash
-  , plutusScript_languageVersion
-  , plutusScriptSource_new
-  , plutusScriptSource_newRefInput
-  , plutusScriptSource_setRequiredSigners
-  , plutusScriptSource_getRefScriptSize
   , plutusScripts_new
-  , plutusWitness_new
-  , plutusWitness_newWithRef
-  , plutusWitness_newWithoutDatum
-  , plutusWitness_newWithRefWithoutDatum
-  , plutusWitness_script
-  , plutusWitness_datum
-  , plutusWitness_redeemer
-  , plutusWitnesses_new
   , pointer_new
   , pointer_newPointer
   , pointer_slot
@@ -643,7 +622,9 @@ module Cardano.Data.Lite
   , scriptPubkey_addrKeyhash
   , scriptPubkey_new
   , scriptRef_newNativeScript
-  , scriptRef_newPlutusScript
+  , scriptRef_newPlutusScript_v1
+  , scriptRef_newPlutusScript_v2
+  , scriptRef_newPlutusScript_v3
   , scriptRef_isNativeScript
   , scriptRef_isPlutusScript
   , scriptRef_nativeScript
@@ -788,8 +769,12 @@ module Cardano.Data.Lite
   , transactionWitnessSet_nativeScripts
   , transactionWitnessSet_setBootstraps
   , transactionWitnessSet_bootstraps
-  , transactionWitnessSet_setPlutusScripts
-  , transactionWitnessSet_plutusScripts
+  , transactionWitnessSet_setPlutusScripts_v1
+  , transactionWitnessSet_setPlutusScripts_v2
+  , transactionWitnessSet_setPlutusScripts_v3
+  , transactionWitnessSet_plutusScripts_v1
+  , transactionWitnessSet_plutusScripts_v2
+  , transactionWitnessSet_plutusScripts_v3
   , transactionWitnessSet_setPlutusData
   , transactionWitnessSet_plutusData
   , transactionWitnessSet_setRedeemers
@@ -963,7 +948,6 @@ module Cardano.Data.Lite
   , MetadataMap
   , Mint
   , MintAssets
-  , MintWitness
   , MintsAssets
   , MoveInstantaneousReward
   , MoveInstantaneousRewardsCert
@@ -985,10 +969,7 @@ module Cardano.Data.Lite
   , PlutusMap
   , PlutusMapValues
   , PlutusScript
-  , PlutusScriptSource
   , PlutusScripts
-  , PlutusWitness
-  , PlutusWitnesses
   , Pointer
   , PointerAddress
   , PoolMetadata
@@ -1597,7 +1578,6 @@ foreign import certificate_newUnregCert :: StakeDeregistration -> Certificate
 foreign import certificate_newStakeDelegation :: StakeDelegation -> Certificate
 foreign import certificate_newPoolRegistration :: PoolRegistration -> Certificate
 foreign import certificate_newPoolRetirement :: PoolRetirement -> Certificate
-foreign import certificate_newGenesisKeyDelegation :: GenesisKeyDelegation -> Certificate
 foreign import certificate_newMoveInstantaneousRewardsCert :: MoveInstantaneousRewardsCert -> Certificate
 foreign import certificate_newCommitteeHotAuth :: CommitteeHotAuth -> Certificate
 foreign import certificate_newCommitteeColdResign :: CommitteeColdResign -> Certificate
@@ -2850,17 +2830,6 @@ instance IsCsl MintAssets where
 instance IsMapContainer MintAssets AssetName Int
 
 --------------------------------------------------------------------------------
--- Mint witness
-
-foreign import data MintWitness :: Type
-
-foreign import mintWitness_newNativeScript :: NativeScriptSource -> MintWitness
-foreign import mintWitness_newPlutusScript :: PlutusScriptSource -> Redeemer -> MintWitness
-
-instance IsCsl MintWitness where
-  className _ = "MintWitness"
-
---------------------------------------------------------------------------------
 -- Mints assets
 
 foreign import data MintsAssets :: Type
@@ -3320,16 +3289,10 @@ instance IsListContainer PlutusMapValues PlutusData
 foreign import data PlutusScript :: Type
 
 foreign import plutusScript_new :: ByteArray -> PlutusScript
-foreign import plutusScript_newV2 :: ByteArray -> PlutusScript
-foreign import plutusScript_newV3 :: ByteArray -> PlutusScript
-foreign import plutusScript_newWithVersion :: ByteArray -> Language -> PlutusScript
 foreign import plutusScript_bytes :: PlutusScript -> ByteArray
-foreign import plutusScript_fromBytesV2 :: ByteArray -> PlutusScript
-foreign import plutusScript_fromBytesV3 :: ByteArray -> PlutusScript
-foreign import plutusScript_fromBytesWithVersion :: ByteArray -> Language -> PlutusScript
-foreign import plutusScript_fromHexWithVersion :: String -> Language -> PlutusScript
-foreign import plutusScript_hash :: PlutusScript -> ScriptHash
-foreign import plutusScript_languageVersion :: PlutusScript -> Language
+foreign import plutusScript_fromBytes :: ByteArray -> Nullable PlutusScript
+foreign import plutusScript_fromHex :: String ->  Nullable PlutusScript
+foreign import plutusScript_hash :: PlutusScript -> Number -> ScriptHash
 
 instance IsCsl PlutusScript where
   className _ = "PlutusScript"
@@ -3344,20 +3307,6 @@ instance DecodeAeson PlutusScript where
 instance Show PlutusScript where
   show = showViaBytes
 
---------------------------------------------------------------------------------
--- Plutus script source
-
-foreign import data PlutusScriptSource :: Type
-
-foreign import plutusScriptSource_new :: PlutusScript -> PlutusScriptSource
-foreign import plutusScriptSource_newRefInput :: ScriptHash -> TransactionInput -> Language -> Number -> PlutusScriptSource
-foreign import plutusScriptSource_setRequiredSigners :: PlutusScriptSource -> Ed25519KeyHashes -> Effect Unit
-foreign import plutusScriptSource_getRefScriptSize :: PlutusScriptSource -> Nullable Number
-
-instance IsCsl PlutusScriptSource where
-  className _ = "PlutusScriptSource"
-
---------------------------------------------------------------------------------
 -- Plutus scripts
 
 foreign import data PlutusScripts :: Type
@@ -3379,34 +3328,6 @@ instance Show PlutusScripts where
   show = showViaJson
 
 instance IsListContainer PlutusScripts PlutusScript
-
---------------------------------------------------------------------------------
--- Plutus witness
-
-foreign import data PlutusWitness :: Type
-
-foreign import plutusWitness_new :: PlutusScript -> PlutusData -> Redeemer -> PlutusWitness
-foreign import plutusWitness_newWithRef :: PlutusScriptSource -> DatumSource -> Redeemer -> PlutusWitness
-foreign import plutusWitness_newWithoutDatum :: PlutusScript -> Redeemer -> PlutusWitness
-foreign import plutusWitness_newWithRefWithoutDatum :: PlutusScriptSource -> Redeemer -> PlutusWitness
-foreign import plutusWitness_script :: PlutusWitness -> Nullable PlutusScript
-foreign import plutusWitness_datum :: PlutusWitness -> Nullable PlutusData
-foreign import plutusWitness_redeemer :: PlutusWitness -> Redeemer
-
-instance IsCsl PlutusWitness where
-  className _ = "PlutusWitness"
-
---------------------------------------------------------------------------------
--- Plutus witnesses
-
-foreign import data PlutusWitnesses :: Type
-
-foreign import plutusWitnesses_new :: Effect PlutusWitnesses
-
-instance IsCsl PlutusWitnesses where
-  className _ = "PlutusWitnesses"
-
-instance IsListContainer PlutusWitnesses PlutusWitness
 
 --------------------------------------------------------------------------------
 -- Pointer
@@ -4079,7 +4000,9 @@ instance Show ScriptPubkey where
 foreign import data ScriptRef :: Type
 
 foreign import scriptRef_newNativeScript :: NativeScript -> ScriptRef
-foreign import scriptRef_newPlutusScript :: PlutusScript -> ScriptRef
+foreign import scriptRef_newPlutusScript_v1 :: PlutusScript -> ScriptRef
+foreign import scriptRef_newPlutusScript_v2 :: PlutusScript -> ScriptRef
+foreign import scriptRef_newPlutusScript_v3 :: PlutusScript -> ScriptRef
 foreign import scriptRef_isNativeScript :: ScriptRef -> Boolean
 foreign import scriptRef_isPlutusScript :: ScriptRef -> Boolean
 foreign import scriptRef_nativeScript :: ScriptRef -> Nullable NativeScript
@@ -4684,8 +4607,12 @@ foreign import transactionWitnessSet_setNativeScripts :: TransactionWitnessSet -
 foreign import transactionWitnessSet_nativeScripts :: TransactionWitnessSet -> Nullable NativeScripts
 foreign import transactionWitnessSet_setBootstraps :: TransactionWitnessSet -> BootstrapWitnesses -> Effect Unit
 foreign import transactionWitnessSet_bootstraps :: TransactionWitnessSet -> Nullable BootstrapWitnesses
-foreign import transactionWitnessSet_setPlutusScripts :: TransactionWitnessSet -> PlutusScripts -> Effect Unit
-foreign import transactionWitnessSet_plutusScripts :: TransactionWitnessSet -> Nullable PlutusScripts
+foreign import transactionWitnessSet_setPlutusScripts_v1 :: TransactionWitnessSet -> PlutusScripts -> Effect Unit
+foreign import transactionWitnessSet_setPlutusScripts_v2 :: TransactionWitnessSet -> PlutusScripts -> Effect Unit
+foreign import transactionWitnessSet_setPlutusScripts_v3 :: TransactionWitnessSet -> PlutusScripts -> Effect Unit
+foreign import transactionWitnessSet_plutusScripts_v1 :: TransactionWitnessSet -> Nullable PlutusScripts
+foreign import transactionWitnessSet_plutusScripts_v2 :: TransactionWitnessSet -> Nullable PlutusScripts
+foreign import transactionWitnessSet_plutusScripts_v3 :: TransactionWitnessSet -> Nullable PlutusScripts
 foreign import transactionWitnessSet_setPlutusData :: TransactionWitnessSet -> PlutusList -> Effect Unit
 foreign import transactionWitnessSet_plutusData :: TransactionWitnessSet -> Nullable PlutusList
 foreign import transactionWitnessSet_setRedeemers :: TransactionWitnessSet -> Redeemers -> Effect Unit
