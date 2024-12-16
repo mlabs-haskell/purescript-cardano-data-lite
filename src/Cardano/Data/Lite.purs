@@ -629,7 +629,9 @@ module Cardano.Data.Lite
   , scriptRef_isNativeScript
   , scriptRef_isPlutusScript
   , scriptRef_nativeScript
-  , scriptRef_plutusScript
+  , scriptRef_plutusScript_v1
+  , scriptRef_plutusScript_v2
+  , scriptRef_plutusScript_v3
   , scriptRef_toUnwrappedBytes
   , singleHostAddr_port
   , singleHostAddr_ipv4
@@ -4010,7 +4012,9 @@ foreign import scriptRef_newPlutusScript_v3 :: PlutusScript -> ScriptRef
 foreign import scriptRef_isNativeScript :: ScriptRef -> Boolean
 foreign import scriptRef_isPlutusScript :: ScriptRef -> Boolean
 foreign import scriptRef_nativeScript :: ScriptRef -> Nullable NativeScript
-foreign import scriptRef_plutusScript :: ScriptRef -> Nullable PlutusScript
+foreign import scriptRef_plutusScript_v1 :: ScriptRef -> Nullable PlutusScript
+foreign import scriptRef_plutusScript_v2 :: ScriptRef -> Nullable PlutusScript
+foreign import scriptRef_plutusScript_v3 :: ScriptRef -> Nullable PlutusScript
 foreign import scriptRef_toUnwrappedBytes :: ScriptRef -> ByteArray
 
 instance IsCsl ScriptRef where

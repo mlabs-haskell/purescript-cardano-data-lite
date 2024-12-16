@@ -1435,8 +1435,10 @@ export const scriptRef_isNativeScript = self =>
   self.is_native_script.bind(self)();
 export const scriptRef_isPlutusScript = self =>
   self.is_plutus_script.bind(self)();
-export const scriptRef_nativeScript = self => self.native_script.bind(self)();
-export const scriptRef_plutusScript = self => self.plutus_script.bind(self)();
+export const scriptRef_nativeScript = self => undefinedToPurs(self.as_native_script.bind(self));
+export const scriptRef_plutusScript_v1 = self => undefinedToPurs(self.as_plutus_script_v1.bind(self));
+export const scriptRef_plutusScript_v2 = self => undefinedToPurs(self.as_plutus_script_v2.bind(self));
+export const scriptRef_plutusScript_v3 = self => undefinedToPurs(self.as_plutus_script_v3.bind(self));
 export const scriptRef_toUnwrappedBytes = self =>
   self.to_unwrapped_bytes.bind(self)();
 
