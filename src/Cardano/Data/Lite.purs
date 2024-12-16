@@ -3165,6 +3165,8 @@ foreign import outputDatum_data :: OutputDatum -> Nullable PlutusData
 instance IsCsl OutputDatum where
   className _ = "OutputDatum"
 
+instance IsBytes OutputDatum
+
 --------------------------------------------------------------------------------
 -- Parameter change action
 

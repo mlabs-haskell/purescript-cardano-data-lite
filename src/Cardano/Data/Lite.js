@@ -950,8 +950,8 @@ export const operationalCert_new =
 export const outputDatum_newDataHash = data_hash =>
   CDL.OutputDatum.new_data_hash(data_hash);
 export const outputDatum_newData = data => CDL.OutputDatum.new_data(data);
-export const outputDatum_dataHash = self => self.data_hash.bind(self)();
-export const outputDatum_data = self => self.data.bind(self)();
+export const outputDatum_dataHash = self => undefinedToPurs(self.as_data_hash.bind(self));
+export const outputDatum_data = self => undefinedToPurs(self.as_data.bind(self));
 
 // ParameterChangeAction
 export const parameterChangeAction_govActionId = self =>
