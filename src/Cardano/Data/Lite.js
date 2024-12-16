@@ -983,6 +983,7 @@ export const parameterChangeAction_newWithPolicyHashAndActionId =
     );
 
 // PlutusData
+export const plutusData_fromBytes = bytes => errorableToPurs(CDL.PlutusData.from_bytes, bytes);
 export const plutusData_newConstrPlutusData = constr_plutus_data =>
   CDL.PlutusData.new_constr_plutus_data(constr_plutus_data);
 export const plutusData_newEmptyConstrPlutusData = alternative =>

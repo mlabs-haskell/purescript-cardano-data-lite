@@ -424,6 +424,7 @@ module Cardano.Data.Lite
   , parameterChangeAction_newWithActionId
   , parameterChangeAction_newWithPolicyHash
   , parameterChangeAction_newWithPolicyHashAndActionId
+  , plutusData_fromBytes
   , plutusData_newConstrPlutusData
   , plutusData_newEmptyConstrPlutusData
   , plutusData_newSingleValueConstrPlutusData
@@ -3199,6 +3200,7 @@ instance Show ParameterChangeAction where
 
 foreign import data PlutusData :: Type
 
+foreign import plutusData_fromBytes :: ByteArray  -> Nullable PlutusData
 foreign import plutusData_newConstrPlutusData :: ConstrPlutusData -> PlutusData
 foreign import plutusData_newEmptyConstrPlutusData :: BigNum -> PlutusData
 foreign import plutusData_newSingleValueConstrPlutusData :: BigNum -> PlutusData -> PlutusData
