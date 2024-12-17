@@ -528,7 +528,7 @@ export const dataHash_fromBech32 = bech_str =>
   errorableToPurs(CDL.DataHash.from_bech32, bech_str);
 
 // DatumSource
-export const datumSource_new = datum => CDL.DatumSource.new(datum);
+export const datumSource_newDatum = datum => CDL.DatumSource.new_datum(datum);
 export const datumSource_newRefInput = input =>
   CDL.DatumSource.new_ref_input(input);
 
@@ -1713,14 +1713,14 @@ export const transactionMetadatumLabels_new = () =>
 // TransactionOutput
 export const transactionOutput_address = self => self.address.bind(self)();
 export const transactionOutput_amount = self => self.amount.bind(self)();
-export const transactionOutput_dataHash = self => self.data_hash.bind(self)();
-export const transactionOutput_plutusData = self =>
-  self.plutus_data.bind(self)();
-export const transactionOutput_scriptRef = self => self.script_ref.bind(self)();
+export const transactionOutput_dataHash = self => undefinedToPurs(self.data_hash.bind(self));
+export const transactionOutput_datumOption = self =>
+  undefinedToPurs(self.datum_option.bind(self));
+export const transactionOutput_scriptRef = self => undefinedToPurs(self.script_ref.bind(self));
 export const transactionOutput_setScriptRef = self => script_ref => () =>
   self.set_script_ref.bind(self)(script_ref);
-export const transactionOutput_setPlutusData = self => data => () =>
-  self.set_plutus_data.bind(self)(data);
+export const transactionOutput_setDatumOption = self => datum => () =>
+  self.set_datum_option.bind(self)(datum);
 export const transactionOutput_setDataHash = self => data_hash => () =>
   self.set_data_hash.bind(self)(data_hash);
 export const transactionOutput_hasPlutusData = self =>
@@ -1731,8 +1731,6 @@ export const transactionOutput_hasScriptRef = self =>
   self.has_script_ref.bind(self)();
 export const transactionOutput_new = address => amount =>
   CDL.TransactionOutput.new(address, amount);
-export const transactionOutput_serializationFormat = self =>
-  self.serialization_format.bind(self)();
 
 // TransactionOutputs
 export const transactionOutputs_new = () => CDL.TransactionOutputs.new();

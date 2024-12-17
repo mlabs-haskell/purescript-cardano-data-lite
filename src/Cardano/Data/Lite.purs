@@ -239,7 +239,7 @@ module Cardano.Data.Lite
   , dataCost_coinsPerByte
   , dataHash_toBech32
   , dataHash_fromBech32
-  , datumSource_new
+  , datumSource_newDatum
   , datumSource_newRefInput
   , ed25519KeyHash_toBech32
   , ed25519KeyHash_fromBech32
@@ -759,16 +759,15 @@ module Cardano.Data.Lite
   , transactionOutput_address
   , transactionOutput_amount
   , transactionOutput_dataHash
-  , transactionOutput_plutusData
+  , transactionOutput_datumOption
   , transactionOutput_scriptRef
   , transactionOutput_setScriptRef
-  , transactionOutput_setPlutusData
+  , transactionOutput_setDatumOption
   , transactionOutput_setDataHash
   , transactionOutput_hasPlutusData
   , transactionOutput_hasDataHash
   , transactionOutput_hasScriptRef
   , transactionOutput_new
-  , transactionOutput_serializationFormat
   , transactionOutputs_new
   , transactionUnspentOutput_new
   , transactionUnspentOutput_input
@@ -2173,7 +2172,7 @@ instance Show DataHash where
 
 foreign import data DatumSource :: Type
 
-foreign import datumSource_new :: PlutusData -> DatumSource
+foreign import datumSource_newDatum :: PlutusData -> DatumSource
 foreign import datumSource_newRefInput :: TransactionInput -> DatumSource
 
 instance IsCsl DatumSource where
@@ -4569,16 +4568,15 @@ foreign import data TransactionOutput :: Type
 foreign import transactionOutput_address :: TransactionOutput -> Address
 foreign import transactionOutput_amount :: TransactionOutput -> Value
 foreign import transactionOutput_dataHash :: TransactionOutput -> Nullable DataHash
-foreign import transactionOutput_plutusData :: TransactionOutput -> Nullable PlutusData
+foreign import transactionOutput_datumOption :: TransactionOutput -> Nullable DataOption
 foreign import transactionOutput_scriptRef :: TransactionOutput -> Nullable ScriptRef
 foreign import transactionOutput_setScriptRef :: TransactionOutput -> ScriptRef -> Effect Unit
-foreign import transactionOutput_setPlutusData :: TransactionOutput -> PlutusData -> Effect Unit
+foreign import transactionOutput_setDatumOption :: TransactionOutput -> DataOption -> Effect Unit
 foreign import transactionOutput_setDataHash :: TransactionOutput -> DataHash -> Effect Unit
 foreign import transactionOutput_hasPlutusData :: TransactionOutput -> Boolean
 foreign import transactionOutput_hasDataHash :: TransactionOutput -> Boolean
 foreign import transactionOutput_hasScriptRef :: TransactionOutput -> Boolean
 foreign import transactionOutput_new :: Address -> Value -> TransactionOutput
-foreign import transactionOutput_serializationFormat :: TransactionOutput -> Nullable CborContainerType
 
 instance IsCsl TransactionOutput where
   className _ = "TransactionOutput"
