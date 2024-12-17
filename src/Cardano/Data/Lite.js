@@ -58,21 +58,18 @@ export const assets_new = () => CDL.Assets.new();
 
 // AuxiliaryData
 export const auxiliaryData_new = () => CDL.AuxiliaryData.new();
-export const auxiliaryData_metadata = self => self.metadata.bind(self)();
+export const auxiliaryData_metadata = self => undefinedToPurs(self.metadata.bind(self));
 export const auxiliaryData_setMetadata = self => metadata => () =>
   self.set_metadata.bind(self)(metadata);
-export const auxiliaryData_nativeScripts = self =>
-  self.native_scripts.bind(self)();
+export const auxiliaryData_nativeScripts = self => undefinedToPurs(self.native_scripts.bind(self));
 export const auxiliaryData_setNativeScripts = self => native_scripts => () =>
   self.set_native_scripts.bind(self)(native_scripts);
-export const auxiliaryData_plutusScripts = self =>
-  self.plutus_scripts.bind(self)();
-export const auxiliaryData_setPlutusScripts = self => plutus_scripts => () =>
-  self.set_plutus_scripts.bind(self)(plutus_scripts);
-export const auxiliaryData_preferAlonzoFormat = self =>
-  self.prefer_alonzo_format.bind(self)();
-export const auxiliaryData_setPreferAlonzoFormat = self => prefer => () =>
-  self.set_prefer_alonzo_format.bind(self)(prefer);
+export const auxiliaryData_plutusScripts_v1 = self => undefinedToPurs(self.plutus_scripts_v1.bind(self));
+export const auxiliaryData_plutusScripts_v2 = self => undefinedToPurs(self.plutus_scripts_v2.bind(self));
+export const auxiliaryData_plutusScripts_v3 = self => undefinedToPurs(self.plutus_scripts_v3.bind(self));
+export const auxiliaryData_setPlutusScripts_v1 = self => plutus_scripts => () => self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
+export const auxiliaryData_setPlutusScripts_v2 = self => plutus_scripts => () => self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
+export const auxiliaryData_setPlutusScripts_v3 = self => plutus_scripts => () => self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
 
 // AuxiliaryDataHash
 export const auxiliaryDataHash_toBech32 = self => prefix =>

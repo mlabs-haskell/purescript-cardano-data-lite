@@ -20,10 +20,12 @@ module Cardano.Data.Lite
   , auxiliaryData_setMetadata
   , auxiliaryData_nativeScripts
   , auxiliaryData_setNativeScripts
-  , auxiliaryData_plutusScripts
-  , auxiliaryData_setPlutusScripts
-  , auxiliaryData_preferAlonzoFormat
-  , auxiliaryData_setPreferAlonzoFormat
+  , auxiliaryData_plutusScripts_v1
+  , auxiliaryData_plutusScripts_v2
+  , auxiliaryData_plutusScripts_v3
+  , auxiliaryData_setPlutusScripts_v1
+  , auxiliaryData_setPlutusScripts_v2
+  , auxiliaryData_setPlutusScripts_v3
   , auxiliaryDataHash_toBech32
   , auxiliaryDataHash_fromBech32
   , baseAddress_new
@@ -1335,10 +1337,12 @@ foreign import auxiliaryData_metadata :: AuxiliaryData -> Nullable GeneralTransa
 foreign import auxiliaryData_setMetadata :: AuxiliaryData -> GeneralTransactionMetadata -> Effect Unit
 foreign import auxiliaryData_nativeScripts :: AuxiliaryData -> Nullable NativeScripts
 foreign import auxiliaryData_setNativeScripts :: AuxiliaryData -> NativeScripts -> Effect Unit
-foreign import auxiliaryData_plutusScripts :: AuxiliaryData -> Nullable PlutusScripts
-foreign import auxiliaryData_setPlutusScripts :: AuxiliaryData -> PlutusScripts -> Effect Unit
-foreign import auxiliaryData_preferAlonzoFormat :: AuxiliaryData -> Boolean
-foreign import auxiliaryData_setPreferAlonzoFormat :: AuxiliaryData -> Boolean -> Effect Unit
+foreign import auxiliaryData_plutusScripts_v1 :: AuxiliaryData -> Nullable PlutusScripts
+foreign import auxiliaryData_plutusScripts_v2 :: AuxiliaryData -> Nullable PlutusScripts
+foreign import auxiliaryData_plutusScripts_v3 :: AuxiliaryData -> Nullable PlutusScripts
+foreign import auxiliaryData_setPlutusScripts_v1 :: AuxiliaryData -> PlutusScripts -> Effect Unit
+foreign import auxiliaryData_setPlutusScripts_v2 :: AuxiliaryData -> PlutusScripts -> Effect Unit
+foreign import auxiliaryData_setPlutusScripts_v3 :: AuxiliaryData -> PlutusScripts -> Effect Unit
 
 instance IsCsl AuxiliaryData where
   className _ = "AuxiliaryData"
