@@ -199,7 +199,7 @@ module Cardano.Data.Lite
   , dRep_toScriptHash
   , dRep_toBech32
   , dRep_fromBech32
-  , dRepDeregistration_votingCredential
+  , dRepDeregistration_drepCredential
   , dRepDeregistration_coin
   , dRepDeregistration_new
   , dRepDeregistration_hasScriptCredentials
@@ -209,7 +209,7 @@ module Cardano.Data.Lite
   , dRepRegistration_new
   , dRepRegistration_newWithAnchor
   , dRepRegistration_hasScriptCredentials
-  , dRepUpdate_votingCredential
+  , dRepUpdate_drepCredential
   , dRepUpdate_anchor
   , dRepUpdate_new
   , dRepUpdate_newWithAnchor
@@ -2025,7 +2025,7 @@ instance Show DRep where
 
 foreign import data DRepDeregistration :: Type
 
-foreign import dRepDeregistration_votingCredential :: DRepDeregistration -> Credential
+foreign import dRepDeregistration_drepCredential :: DRepDeregistration -> Credential
 foreign import dRepDeregistration_coin :: DRepDeregistration -> BigNum
 foreign import dRepDeregistration_new :: Credential -> BigNum -> DRepDeregistration
 foreign import dRepDeregistration_hasScriptCredentials :: DRepDeregistration -> Boolean
@@ -2075,7 +2075,7 @@ instance Show DRepRegistration where
 
 foreign import data DRepUpdate :: Type
 
-foreign import dRepUpdate_votingCredential :: DRepUpdate -> Credential
+foreign import dRepUpdate_drepCredential :: DRepUpdate -> Credential
 foreign import dRepUpdate_anchor :: DRepUpdate -> Nullable Anchor
 foreign import dRepUpdate_new :: Credential -> DRepUpdate
 foreign import dRepUpdate_newWithAnchor :: Credential -> Anchor -> DRepUpdate

@@ -402,15 +402,15 @@ export const dRep_newAlwaysNoConfidence = CDL.DRep.new_always_no_confidence();
 export const dRep_newFromCredential = cred =>
   CDL.DRep.new_from_credential(cred);
 export const dRep_kind = self => self.kind.bind(self)();
-export const dRep_toKeyHash = self => self.to_key_hash.bind(self)();
-export const dRep_toScriptHash = self => self.to_script_hash.bind(self)();
+export const dRep_toKeyHash = self => undefinedToPurs(self.as_key_hash.bind(self));
+export const dRep_toScriptHash = self => undefinedToPurs(self.as_script_hash.bind(self));
 export const dRep_toBech32 = self => self.to_bech32.bind(self)();
 export const dRep_fromBech32 = bech32_str =>
   errorableToPurs(CDL.DRep.from_bech32, bech32_str);
 
 // DRepDeregistration
-export const dRepDeregistration_votingCredential = self =>
-  self.voting_credential.bind(self)();
+export const dRepDeregistration_drepCredential = self =>
+  self.drep_credential.bind(self)();
 export const dRepDeregistration_coin = self => self.coin.bind(self)();
 export const dRepDeregistration_new = voting_credential => coin =>
   CDL.DRepDeregistration.new(voting_credential, coin);
@@ -431,8 +431,8 @@ export const dRepRegistration_hasScriptCredentials = self =>
   self.has_script_credentials.bind(self)();
 
 // DRepUpdate
-export const dRepUpdate_votingCredential = self =>
-  self.voting_credential.bind(self)();
+export const dRepUpdate_drepCredential = self =>
+  self.drep_credential.bind(self)();
 export const dRepUpdate_anchor = self => self.anchor.bind(self)();
 export const dRepUpdate_new = voting_credential =>
   CDL.DRepUpdate.new(voting_credential);
