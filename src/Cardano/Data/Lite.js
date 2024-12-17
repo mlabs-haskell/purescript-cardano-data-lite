@@ -378,6 +378,12 @@ export const credentials_new = CDL.Credentials.new();
 export const data_new = data => CDL.Data.new(data);
 export const data_encodedPlutusData = self => self.encoded_plutus_data.bind(self)();
 
+// DataOption
+export const dataOption_newData = data => CDL.DataOption.new_data(data);
+export const dataOption_newHash = hash => CDL.DataOption.new_hash(hash);
+export const dataOption_asData = self => undefinedToPurs(self.as_data.bind(self));
+export const dataOption_asHash = self => undefinedToPurs(self.as_hash.bind(self));
+
 // DNSRecordAorAAAA
 export const dnsRecordAorAAAA_new = dns_name =>
   CDL.DNSRecordAorAAAA.new(dns_name);

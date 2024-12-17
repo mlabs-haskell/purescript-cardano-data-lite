@@ -181,6 +181,10 @@ module Cardano.Data.Lite
   , credentials_new
  , data_new
  , data_encodedPlutusData
+ , dataOption_newData
+ , dataOption_newHash
+ , dataOption_asData
+ , dataOption_asHash
   , dnsRecordAorAAAA_new
   , dnsRecordAorAAAA_record
   , dnsRecordSRV_new
@@ -913,6 +917,7 @@ module Cardano.Data.Lite
   , Credential
   , Credentials
   , Data
+  , DataOption
   , DNSRecordAorAAAA
   , DNSRecordSRV
   , DRep
@@ -1915,6 +1920,30 @@ instance DecodeAeson Data where
   decodeAeson = cslFromAeson
 
 instance Show Data where
+  show = showViaJson
+
+--------------------------------------------------------------------------------
+-- DataOption
+
+foreign import data DataOption :: Type
+
+foreign import dataOption_newData :: Data -> DataOption
+foreign import dataOption_newHash :: DataHash -> DataOption
+foreign import dataOption_asData :: DataOption -> Nullable Data
+foreign import dataOption_asHash :: DataOption -> Nullable DataHash
+
+instance IsCsl DataOption where
+  className _ = "DataOption"
+
+instance IsBytes DataOption
+instance IsJson DataOption
+instance EncodeAeson DataOption where
+  encodeAeson = cslToAeson
+
+instance DecodeAeson DataOption where
+  decodeAeson = cslFromAeson
+
+instance Show DataOption where
   show = showViaJson
 
 --------------------------------------------------------------------------------
