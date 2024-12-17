@@ -374,6 +374,10 @@ export const credential_hasScriptHash = self =>
 // Credentials
 export const credentials_new = CDL.Credentials.new();
 
+// Data
+export const data_new = data => CDL.Data.new(data);
+export const data_encodedPlutusData = self => self.encoded_plutus_data.bind(self)();
+
 // DNSRecordAorAAAA
 export const dnsRecordAorAAAA_new = dns_name =>
   CDL.DNSRecordAorAAAA.new(dns_name);

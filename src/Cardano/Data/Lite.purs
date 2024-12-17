@@ -179,6 +179,8 @@ module Cardano.Data.Lite
   , credential_kind
   , credential_hasScriptHash
   , credentials_new
+ , data_new
+ , data_encodedPlutusData
   , dnsRecordAorAAAA_new
   , dnsRecordAorAAAA_record
   , dnsRecordSRV_new
@@ -910,6 +912,7 @@ module Cardano.Data.Lite
   , Costmdls
   , Credential
   , Credentials
+  , Data
   , DNSRecordAorAAAA
   , DNSRecordSRV
   , DRep
@@ -1891,6 +1894,28 @@ instance Show Credentials where
   show = showViaJson
 
 instance IsListContainer Credentials Credential
+
+--------------------------------------------------------------------------------
+-- Data
+
+foreign import data Data :: Type
+
+foreign import data_new :: ByteArray -> Data
+foreign import data_encodedPlutusData :: Data -> ByteArray
+
+instance IsCsl Data where
+  className _ = "Data"
+
+instance IsBytes Data
+instance IsJson Data
+instance EncodeAeson Data where
+  encodeAeson = cslToAeson
+
+instance DecodeAeson Data where
+  decodeAeson = cslFromAeson
+
+instance Show Data where
+  show = showViaJson
 
 --------------------------------------------------------------------------------
 -- DNSRecord aor aaaa
