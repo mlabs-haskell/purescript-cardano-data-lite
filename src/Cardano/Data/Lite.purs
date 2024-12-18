@@ -450,6 +450,8 @@ module Cardano.Data.Lite
   , plutusData_asAddress
   , plutusList_new
   , plutusMap_new
+  , plutusMap_keys
+  , plutusMap_values
   , plutusMapValues_new
   , plutusScript_new
   , plutusScript_bytes
@@ -3318,6 +3320,8 @@ instance IsListContainer PlutusList PlutusData
 foreign import data PlutusMap :: Type
 
 foreign import plutusMap_new :: Effect PlutusMap
+foreign import plutusMap_keys :: PlutusMap -> PlutusList
+foreign import plutusMap_values :: PlutusMap -> PlutusMapValues
 
 instance IsCsl PlutusMap where
   className _ = "PlutusMap"

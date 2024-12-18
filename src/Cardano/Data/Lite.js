@@ -1022,6 +1022,8 @@ export const plutusList_new = () => CDL.PlutusList.new();
 
 // PlutusMap
 export const plutusMap_new = () => CDL.PlutusMap.new();
+export const plutusMap_keys = self => self.keys.bind(self)();
+export const plutusMap_values = self => self.values.bind(self)();
 
 // PlutusMapValues
 export const plutusMapValues_new = CDL.PlutusMapValues.new();
