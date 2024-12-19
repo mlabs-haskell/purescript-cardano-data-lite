@@ -16,6 +16,9 @@ module Cardano.Data.Lite
   , assetNames_new
   , assets_new
   , auxiliaryData_new
+, auxiliaryData_newShelleyMetadata
+, auxiliaryData_newShelleyMetadataMa
+, auxiliaryData_newPostAlonzoMetadata
   , auxiliaryData_metadata
   , auxiliaryData_setMetadata
   , auxiliaryData_nativeScripts
@@ -1342,6 +1345,9 @@ instance IsMapContainer Assets AssetName BigNum
 foreign import data AuxiliaryData :: Type
 
 foreign import auxiliaryData_new :: Effect AuxiliaryData
+foreign import auxiliaryData_newShelleyMetadata :: Effect AuxiliaryData
+foreign import auxiliaryData_newShelleyMetadataMa :: Effect AuxiliaryData
+foreign import auxiliaryData_newPostAlonzoMetadata :: Effect AuxiliaryData
 foreign import auxiliaryData_metadata :: AuxiliaryData -> Nullable GeneralTransactionMetadata
 foreign import auxiliaryData_setMetadata :: AuxiliaryData -> GeneralTransactionMetadata -> Effect Unit
 foreign import auxiliaryData_nativeScripts :: AuxiliaryData -> Nullable NativeScripts

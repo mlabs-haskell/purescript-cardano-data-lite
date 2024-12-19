@@ -58,6 +58,9 @@ export const assets_new = () => CDL.Assets.new();
 
 // AuxiliaryData
 export const auxiliaryData_new = () => CDL.AuxiliaryData.new();
+export const auxiliaryData_newShelleyMetadata = () => CDL.AuxiliaryData.new_shelley_metadata();
+export const auxiliaryData_newShelleyMetadataMa = () => CDL.AuxiliaryData.new_shelley_metadata_ma();
+export const auxiliaryData_newPostAlonzoMetadata = () => CDL.AuxiliaryData.new_postalonzo_metadata();
 export const auxiliaryData_metadata = self => undefinedToPurs(self.metadata.bind(self));
 export const auxiliaryData_setMetadata = self => metadata => () =>
   self.set_metadata.bind(self)(metadata);
