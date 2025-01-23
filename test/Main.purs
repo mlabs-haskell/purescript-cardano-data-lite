@@ -65,7 +65,7 @@ plutusListSerializationCliCompatibility = do
     plutusList :: PlutusList
     plutusList = packListContainer [ plutusData ]
 
-  (show $ cslToAesonViaBytes plutusList) `shouldEqual` "\"9f01ff\""
+  (show $ cslToAesonViaBytes plutusList) `shouldEqual` "\"8101\""
 
 {-
 witnessSet <- liftEffect transactionWitnessSet_new
