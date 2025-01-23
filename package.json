@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "@mlabs-haskell/json-bigint": "^2.0.0",
-        "@mlabs-haskell/cardano-data-lite": "https://github.com/mlabs-haskell/cardano-data-lite.git#01274415829dc56d3b136b33c27d614a5e53e71f",
+        "@mlabs-haskell/cardano-data-lite": "*",
         "@aws-crypto/crc32": "^5.2.0",
         "@noble/ed25519": "^2.1.0",
         "@noble/hashes": "^1.5.0",
