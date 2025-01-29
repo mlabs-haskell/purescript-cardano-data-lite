@@ -1931,8 +1931,8 @@ export const voters_new = CDL.Voters.new();
 export const votingProcedure_new = vote => CDL.VotingProcedure.new(vote);
 export const votingProcedure_newWithAnchor = vote => anchor =>
   CDL.VotingProcedure.new_with_anchor(vote, anchor);
-export const votingProcedure_voteKind = self => self.vote_kind.bind(self)();
-export const votingProcedure_anchor = self => self.anchor.bind(self)();
+export const votingProcedure_voteKind = self => self.vote.bind(self)();
+export const votingProcedure_anchor = self => undefinedToPurs(self.anchor.bind(self));
 
 // VotingProcedures
 export const votingProcedures_free = self =>
