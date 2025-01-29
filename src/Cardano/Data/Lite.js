@@ -368,11 +368,10 @@ export const costmdls_retainLanguageVersions = self => languages =>
 export const credential_fromKeyhash = hash => CDL.Credential.from_keyhash(hash);
 export const credential_fromScripthash = hash =>
   CDL.Credential.from_scripthash(hash);
-export const credential_toKeyhash = self => self.to_keyhash.bind(self)();
-export const credential_toScripthash = self => self.to_scripthash.bind(self)();
+export const credential_toKeyhash = self => undefinedToPurs(self.to_keyhash.bind(self));
+export const credential_toScripthash = self => undefinedToPurs(self.to_scripthash.bind(self));
 export const credential_kind = self => self.kind.bind(self)();
-export const credential_hasScriptHash = self =>
-  self.has_script_hash.bind(self)();
+export const credential_hasScriptHash = self => self.has_script_hash.bind(self)();
 
 // Credentials
 export const credentials_new = CDL.Credentials.new();
