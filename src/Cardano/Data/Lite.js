@@ -1915,15 +1915,14 @@ export const voter_newDrepCredential = cred =>
 export const voter_newStakePoolKeyHash = key_hash =>
   CDL.Voter.new_staking_pool_key_hash(key_hash);
 export const voter_kind = self => self.kind.bind(self)();
-export const voter_toConstitutionalCommitteeHotCredential = self =>
-  self.to_constitutional_committee_hot_credential.bind(self)();
-export const voter_toDrepCredential = self =>
-  self.to_drep_credential.bind(self)();
-export const voter_toStakePoolKeyHash = self =>
-  self.to_stake_pool_key_hash.bind(self)();
+
 export const voter_hasScriptCredentials = self =>
   self.has_script_credentials.bind(self)();
-export const voter_toKeyHash = self => self.to_key_hash.bind(self)();
+
+export const voter_toConstitutionalCommitteeHotCredential = self => undefinedToPurs(self.to_constitutional_committee_hot_credential.bind(self));
+export const voter_toDrepCredential = self => undefinedToPurs(self.to_drep_credential.bind(self));
+export const voter_toStakePoolKeyHash = self => undefinedToPurs(self.to_staking_pool_key_hash.bind(self));
+export const voter_toKeyHash = self => undefinedToPurs(self.to_key_hash.bind(self));
 
 // Voters
 export const voters_new = CDL.Voters.new();
