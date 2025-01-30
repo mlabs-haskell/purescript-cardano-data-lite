@@ -869,6 +869,7 @@ module Cardano.Data.Lite
   , minRefScriptFee
   , makeVkeyWitness
   , hashAuxiliaryData
+  , hashTransaction
   , hashPlutusData
   , hashScriptData
   , minAdaForOutput
@@ -1165,6 +1166,10 @@ foreign import makeVkeyWitness :: TransactionHash -> PrivateKey -> Vkeywitness
 -- | Hash auxiliary data
 -- > hashAuxiliaryData auxiliaryData
 foreign import hashAuxiliaryData :: AuxiliaryData -> AuxiliaryDataHash
+
+-- | Hash transaction
+-- > hashTransaction txBody
+foreign import hashTransaction :: TransactionBody -> TransactionHash
 
 -- | Hash plutus data
 -- > hashPlutusData plutusData

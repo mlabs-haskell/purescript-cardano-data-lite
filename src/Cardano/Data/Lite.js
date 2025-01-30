@@ -1932,6 +1932,7 @@ export const makeVkeyWitness = tx_body_hash => sk =>
   CDL.make_vkey_witness(tx_body_hash, sk);
 export const hashAuxiliaryData = auxiliary_data =>
   CDL.hash_auxiliary_data(auxiliary_data);
+export const hashTransaction = tx_body => CDL.hash_transaction(tx_body);
 export const hashPlutusData = plutus_data => CDL.hash_plutus_data(plutus_data);
 export const hashScriptData = redeemers => cost_models => datums =>
   CDL.hash_script_data(redeemers, cost_models, datums);
