@@ -1459,7 +1459,7 @@ instance DecodeAeson BigNum where
   decodeAeson = cslFromAeson
 
 instance Show BigNum where
-  show = showViaJson
+  show = bigNum_toStr
 
 --------------------------------------------------------------------------------
 -- Bip32 private key
