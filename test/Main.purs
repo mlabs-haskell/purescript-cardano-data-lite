@@ -3,18 +3,8 @@ module Test.Main where
 import Prelude
 
 import Aeson (encodeAeson)
-import Cardano.Data.Lite
-  ( PlutusList
-  , bigInt_fromStr
-  , bigNum_fromStr
-  , constrPlutusData_new
-  , cslToAesonViaBytes
-  , hashPlutusData
-  , packListContainer
-  , plutusData_newConstrPlutusData
-  , plutusData_newInteger
-  , plutusList_new
-  )
+import Cardano.Data.Lite (PlutusList, bigInt_fromStr, bigInt_one, bigNum_fromStr, constrPlutusData_new, cslToAesonViaBytes, hashPlutusData, packListContainer, plutusData_newConstrPlutusData, plutusData_newInteger, plutusList_new)
+import Cardano.Data.Lite.Internal (showViaJson)
 import Control.Monad.Error.Class (class MonadThrow)
 import Data.Maybe (fromJust)
 import Data.Nullable (Nullable, toMaybe)
@@ -74,9 +64,26 @@ liftEffect $ transactionWitnessSet_setPlutusData witnessSet plutusList
 (show $ cslToAesonViaBytes witnessSet) `shouldEqual` "\"a1049f01ff\""
 -}
 
+canShowString
+  :: forall a
+   . Bind a
+  => MonadEffect a
+  => MonadThrow Error a
+  => a Unit
+canShowString = do
+  (show bigInt_one) `shouldEqual`
+    "\"923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec\""
+
 spec :: Spec Unit
 spec = do
   describe "Plutus" do
     it "Legacy output roundtrip" legacyOutputRoundtrip
     it "Plutus List Serialization CLI Compatibility"
       plutusListSerializationCliCompatibility
+  describe "Types" do
+    it "Can show BigInt " do
+      (show bigInt_one) `shouldEqual`
+        "(unsafePartial $ fromJust $ cslFromJson $ jsonParser \"\\\"1\\\"\")"
+    it "Can show BigNum " do
+      (show $ nonNull $ bigNum_fromStr "123") `shouldEqual`
+        "(unsafePartial $ fromJust $ cslFromJson $ jsonParser \"\\\"123\\\"\")"
