@@ -15,10 +15,9 @@ module Cardano.Data.Lite
   , assetName_name
   , assetNames_new
   , assets_new
-  , auxiliaryData_new
-, auxiliaryData_newShelleyMetadata
-, auxiliaryData_newShelleyMetadataMa
-, auxiliaryData_newPostAlonzoMetadata
+  , auxiliaryData_newShelleyMetadata
+  , auxiliaryData_newShelleyMetadataMa
+  , auxiliaryData_newPostAlonzoMetadata
   , auxiliaryData_metadata
   , auxiliaryData_setMetadata
   , auxiliaryData_nativeScripts
@@ -29,6 +28,8 @@ module Cardano.Data.Lite
   , auxiliaryData_setPlutusScripts_v1
   , auxiliaryData_setPlutusScripts_v2
   , auxiliaryData_setPlutusScripts_v3
+  , auxiliaryDataShelleyMa_new
+  , auxiliaryDataPostAlonzo_new
   , auxiliaryDataHash_toBech32
   , auxiliaryDataHash_fromBech32
   , baseAddress_new
@@ -837,6 +838,8 @@ module Cardano.Data.Lite
   , AssetNames
   , Assets
   , AuxiliaryData
+  , AuxiliaryDataShelleyMa
+  , AuxiliaryDataPostAlonzo
   , AuxiliaryDataHash
   , BaseAddress
   , BigInt
@@ -1279,10 +1282,9 @@ instance IsMapContainer Assets AssetName BigNum
 
 foreign import data AuxiliaryData :: Type
 
-foreign import auxiliaryData_new :: Effect AuxiliaryData
-foreign import auxiliaryData_newShelleyMetadata :: Effect AuxiliaryData
-foreign import auxiliaryData_newShelleyMetadataMa :: Effect AuxiliaryData
-foreign import auxiliaryData_newPostAlonzoMetadata :: Effect AuxiliaryData
+foreign import auxiliaryData_newShelleyMetadata :: GeneralTransactionMetadata -> AuxiliaryData
+foreign import auxiliaryData_newShelleyMetadataMa :: AuxiliaryDataShelleyMa -> AuxiliaryData
+foreign import auxiliaryData_newPostAlonzoMetadata :: AuxiliaryDataPostAlonzo -> AuxiliaryData
 foreign import auxiliaryData_metadata :: AuxiliaryData -> Nullable GeneralTransactionMetadata
 foreign import auxiliaryData_setMetadata :: AuxiliaryData -> GeneralTransactionMetadata -> Effect Unit
 foreign import auxiliaryData_nativeScripts :: AuxiliaryData -> Nullable NativeScripts
@@ -1307,6 +1309,23 @@ instance DecodeAeson AuxiliaryData where
 
 instance Show AuxiliaryData where
   show = showViaJson
+
+--------------------------------------------------------------------------------
+-- Auxiliary data Shelley Ma
+
+foreign import data AuxiliaryDataShelleyMa :: Type
+
+foreign import auxiliaryDataShelleyMa_new ::
+  GeneralTransactionMetadata -> NativeScripts
+
+--------------------------------------------------------------------------------
+-- Auxiliary data Post Alonzo
+
+foreign import data AuxiliaryDataPostAlonzo :: Type
+
+foreign import auxiliaryDataPostAlonzo_new ::
+  GeneralTransactionMetadata -> NativeScripts ->
+  PlutusScripts -> PlutusScripts -> PlutusScripts -> AuxiliaryDataPostAlonzo
 
 --------------------------------------------------------------------------------
 -- Auxiliary data hash

@@ -57,10 +57,12 @@ export const assetNames_new = () => CDL.AssetNames.new();
 export const assets_new = () => CDL.Assets.new();
 
 // AuxiliaryData
-export const auxiliaryData_new = () => CDL.AuxiliaryData.new();
-export const auxiliaryData_newShelleyMetadata = () => CDL.AuxiliaryData.new_shelley_metadata();
-export const auxiliaryData_newShelleyMetadataMa = () => CDL.AuxiliaryData.new_shelley_metadata_ma();
-export const auxiliaryData_newPostAlonzoMetadata = () => CDL.AuxiliaryData.new_postalonzo_metadata();
+export const auxiliaryData_newShelleyMetadata =
+  metadata => CDL.AuxiliaryData.new_shelley_metadata(metadata);
+export const auxiliaryData_newShelleyMetadataMa =
+  metadata => CDL.AuxiliaryData.new_shelley_metadata_ma(metadata);
+export const auxiliaryData_newPostAlonzoMetadata =
+  metadata => CDL.AuxiliaryData.new_postalonzo_metadata(metadata);
 export const auxiliaryData_metadata = self => undefinedToPurs(self.metadata.bind(self));
 export const auxiliaryData_setMetadata = self => metadata => () =>
   self.set_metadata.bind(self)(metadata);
@@ -73,6 +75,19 @@ export const auxiliaryData_plutusScripts_v3 = self => undefinedToPurs(self.plutu
 export const auxiliaryData_setPlutusScripts_v1 = self => plutus_scripts => () => self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
 export const auxiliaryData_setPlutusScripts_v2 = self => plutus_scripts => () => self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
 export const auxiliaryData_setPlutusScripts_v3 = self => plutus_scripts => () => self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
+
+// AuxiliaryDataShelleyMa
+export const auxiliaryDataShelleyMa_new = metadata => native_scripts =>
+  CDL.AuxiliaryDataShelleyMa.new(
+    metadata,
+    native_scripts);
+
+// AuxiliaryDataPostAlonzo
+export const auxiliaryDataPostAlonzo_new = metadata => native_scripts =>
+  plutus_scripts_v1 => plutus_scripts_v2 => plutus_scripts_v3 =>
+    CDL.AuxiliaryDataPostAlonzo.new(
+      metadata,
+      native_scripts, plutus_scripts_v1, plutus_scripts_v2, plutus_scripts_v3);
 
 // AuxiliaryDataHash
 export const auxiliaryDataHash_toBech32 = self => prefix =>
