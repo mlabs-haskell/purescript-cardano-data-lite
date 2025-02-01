@@ -47,7 +47,7 @@ export const anchorDataHash_fromBech32 = bech_str =>
   errorableToPurs(CDL.AnchorDataHash.from_bech32, bech_str);
 
 // AssetName
-export const assetName_new = name => CDL.AssetName.new(name);
+export const assetName_new = bytes => CDL.AssetName.new(bytes);
 export const assetName_name = self => self.name.bind(self)();
 
 // AssetNames
@@ -87,7 +87,7 @@ export const baseAddress_paymentCred = self => self.payment_cred.bind(self)();
 export const baseAddress_stakeCred = self => self.stake_cred.bind(self)();
 export const baseAddress_toAddress = self => self.to_address.bind(self)();
 export const baseAddress_fromAddress = addr =>
-  CDL.BaseAddress.from_address(addr);
+  undefinedToPurs(CDL.BaseAddress.from_address, addr);
 export const baseAddress_networkId = self => self.network_id.bind(self)();
 
 // BigInt
@@ -180,8 +180,6 @@ export const byronAddress_attributes = self => self.attributes.bind(self)();
 export const byronAddress_networkId = self => self.network_id.bind(self)();
 export const byronAddress_fromBase58 = s =>
   errorableToPurs(CDL.ByronAddress.from_base58, s);
-export const byronAddress_icarusFromKey = key => protocol_magic =>
-  CDL.ByronAddress.icarus_from_key(key, protocol_magic);
 export const byronAddress_isValid = s => CDL.ByronAddress.is_valid(s);
 export const byronAddress_toAddress = self => self.to_address.bind(self)();
 export const byronAddress_fromAddress = addr =>
@@ -202,11 +200,6 @@ export const certificate_newPoolRegistration = pool_registration =>
   CDL.Certificate.new_pool_registration(pool_registration);
 export const certificate_newPoolRetirement = pool_retirement =>
   CDL.Certificate.new_pool_retirement(pool_retirement);
-export const certificate_newMoveInstantaneousRewardsCert =
-  move_instantaneous_rewards_cert =>
-    CDL.Certificate.new_move_instantaneous_rewards_cert(
-      move_instantaneous_rewards_cert
-    );
 export const certificate_newCommitteeHotAuth = committee_hot_auth =>
   CDL.Certificate.new_committee_hot_auth(committee_hot_auth);
 export const certificate_newCommitteeColdResign = committee_cold_resign =>
@@ -250,10 +243,6 @@ export const certificate_asPoolRegistration = self =>
   self.as_pool_registration.bind(self)();
 export const certificate_asPoolRetirement = self =>
   self.as_pool_retirement.bind(self)();
-export const certificate_asGenesisKeyDelegation = self =>
-  self.as_genesis_key_delegation.bind(self)();
-export const certificate_asMoveInstantaneousRewardsCert = self =>
-  self.as_move_instantaneous_rewards_cert.bind(self)();
 export const certificate_asCommitteeHotAuth = self =>
   self.as_committee_hot_auth.bind(self)();
 export const certificate_asCommitteeColdResign = self =>
@@ -274,8 +263,6 @@ export const certificate_asVoteDelegation = self =>
   self.as_vote_delegation.bind(self)();
 export const certificate_asVoteRegistrationAndDelegation = self =>
   self.as_vote_registration_and_delegation.bind(self)();
-export const certificate_hasRequiredScriptWitness = self =>
-  self.has_required_script_witness.bind(self)();
 
 // Certificates
 export const certificates_new = () => CDL.Certificates.new();
@@ -310,8 +297,6 @@ export const committeeColdResign_new = committee_cold_credential =>
 export const committeeColdResign_newWithAnchor =
   committee_cold_credential => anchor =>
     CDL.CommitteeColdResign.new_with_anchor(committee_cold_credential, anchor);
-export const committeeColdResign_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // CommitteeHotAuth
 export const committeeHotAuth_committeeColdCredential = self =>
@@ -324,8 +309,6 @@ export const committeeHotAuth_new =
       committee_cold_credential,
       committee_hot_credential
     );
-export const committeeHotAuth_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // Constitution
 export const constitution_anchor = self => self.anchor.bind(self)();
@@ -377,7 +360,7 @@ export const credential_hasScriptHash = self => self.has_script_hash.bind(self)(
 export const credentials_new = CDL.Credentials.new();
 
 // Data
-export const data_new = data => CDL.Data.new(data);
+export const data_new = bytes => CDL.Data.new(bytes);
 export const data_encodedPlutusData = self => self.encoded_plutus_data.bind(self)();
 
 // DataOption
@@ -416,8 +399,6 @@ export const dRepDeregistration_drepCredential = self =>
 export const dRepDeregistration_coin = self => self.coin.bind(self)();
 export const dRepDeregistration_new = voting_credential => coin =>
   CDL.DRepDeregistration.new(voting_credential, coin);
-export const dRepDeregistration_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // DRepRegistration
 export const dRepRegistration_votingCredential = self =>
@@ -429,8 +410,6 @@ export const dRepRegistration_new = voting_credential => coin =>
 export const dRepRegistration_newWithAnchor =
   voting_credential => coin => anchor =>
     CDL.DRepRegistration.new_with_anchor(voting_credential, coin, anchor);
-export const dRepRegistration_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // DRepUpdate
 export const dRepUpdate_drepCredential = self =>
@@ -440,8 +419,6 @@ export const dRepUpdate_new = voting_credential =>
   CDL.DRepUpdate.new(voting_credential);
 export const dRepUpdate_newWithAnchor = voting_credential => anchor =>
   CDL.DRepUpdate.new_with_anchor(voting_credential, anchor);
-export const dRepUpdate_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // DRepVotingThresholds
 export const dRepVotingThresholds_new =
@@ -542,9 +519,6 @@ export const ed25519KeyHash_fromBech32 = bech_str =>
 
 // Ed25519KeyHashes
 export const ed25519KeyHashes_new = CDL.Ed25519KeyHashes.new();
-export const ed25519KeyHashes_contains = self => elem =>
-  self.contains.bind(self)(elem);
-export const ed25519KeyHashes_toOption = self => self.to_option.bind(self)();
 
 // Ed25519Signature
 export const ed25519Signature_toBech32 = self => self.to_bech32.bind(self)();
@@ -571,15 +545,6 @@ export const exUnitPrices_new = mem_price => step_price =>
 export const exUnits_mem = self => self.mem.bind(self)();
 export const exUnits_steps = self => self.steps.bind(self)();
 export const exUnits_new = mem => steps => CDL.ExUnits.new(mem, steps);
-
-// FixedTxWitnessesSet
-export const fixedTxWitnessesSet_txWitnessesSet = self =>
-  self.tx_witnesses_set.bind(self)();
-export const fixedTxWitnessesSet_addVkeyWitness = self => vkey_witness => () =>
-  self.add_vkey_witness.bind(self)(vkey_witness);
-export const fixedTxWitnessesSet_addBootstrapWitness =
-  self => bootstrap_witness => () =>
-    self.add_bootstrap_witness.bind(self)(bootstrap_witness);
 
 // GeneralTransactionMetadata
 export const generalTransactionMetadata_new = () =>
@@ -720,20 +685,11 @@ export const language_kind = self => self.kind.bind(self)();
 export const languages_new = () => CDL.Languages.new();
 export const languages_list = CDL.Languages.list();
 
-// LegacyDaedalusPrivateKey
-export const legacyDaedalusPrivateKey_asBytes = self =>
-  self.as_bytes.bind(self)();
-export const legacyDaedalusPrivateKey_chaincode = self =>
-  self.chaincode.bind(self)();
-
 // LinearFee
 export const linearFee_constant = self => self.constant.bind(self)();
 export const linearFee_coefficient = self => self.coefficient.bind(self)();
 export const linearFee_new = coefficient => constant =>
   CDL.LinearFee.new(coefficient, constant);
-
-// MIRToStakeCredentials
-export const mirToStakeCredentials_new = () => CDL.MIRToStakeCredentials.new();
 
 // MalformedAddress
 export const malformedAddress_originalBytes = self =>
@@ -773,24 +729,6 @@ export const mintAssets_newFromEntry = key => value =>
 
 // MintsAssets
 export const mintsAssets_new = CDL.MintsAssets.new();
-
-// MoveInstantaneousReward
-export const moveInstantaneousReward_newToOtherPot = pot => amount =>
-  CDL.MoveInstantaneousReward.new_to_other_pot(pot, amount);
-export const moveInstantaneousReward_newToStakeCreds = pot => amounts =>
-  CDL.MoveInstantaneousReward.new_to_stake_creds(pot, amounts);
-export const moveInstantaneousReward_pot = self => self.pot.bind(self)();
-export const moveInstantaneousReward_kind = self => self.kind.bind(self)();
-export const moveInstantaneousReward_asToOtherPot = self =>
-  self.as_to_other_pot.bind(self)();
-export const moveInstantaneousReward_asToStakeCreds = self =>
-  self.as_to_stake_creds.bind(self)();
-
-// MoveInstantaneousRewardsCert
-export const moveInstantaneousRewardsCert_moveInstantaneousReward = self =>
-  self.move_instantaneous_reward.bind(self)();
-export const moveInstantaneousRewardsCert_new = move_instantaneous_reward =>
-  CDL.MoveInstantaneousRewardsCert.new(move_instantaneous_reward);
 
 // MultiAsset
 export const multiAsset_new = () => CDL.MultiAsset.new();
@@ -873,8 +811,6 @@ export const newConstitutionAction_new = constitution =>
 export const newConstitutionAction_newWithActionId =
   gov_action_id => constitution =>
     CDL.NewConstitutionAction.new_with_action_id(gov_action_id, constitution);
-export const newConstitutionAction_hasScriptHash = self =>
-  self.has_script_hash.bind(self)();
 
 // NoConfidenceAction
 export const noConfidenceAction_govActionId = self =>
@@ -995,18 +931,6 @@ export const pointer_slotBignum = self => self.slot_bignum.bind(self)();
 export const pointer_txIndexBignum = self => self.tx_index_bignum.bind(self)();
 export const pointer_certIndexBignum = self =>
   self.cert_index_bignum.bind(self)();
-
-// PointerAddress
-export const pointerAddress_new = network => payment => stake =>
-  CDL.PointerAddress.new(network, payment, stake);
-export const pointerAddress_paymentCred = self =>
-  self.payment_cred.bind(self)();
-export const pointerAddress_stakePointer = self =>
-  self.stake_pointer.bind(self)();
-export const pointerAddress_toAddress = self => self.to_address.bind(self)();
-export const pointerAddress_fromAddress = addr =>
-  CDL.PointerAddress.from_address(addr);
-export const pointerAddress_networkId = self => self.network_id.bind(self)();
 
 // PoolMetadata
 export const poolMetadata_url = self => self.url.bind(self)();
@@ -1384,7 +1308,7 @@ export const scriptRef_newPlutusScript_v1 = plutus_script =>
 export const scriptRef_newPlutusScript_v2 = plutus_script =>
   CDL.ScriptRef.new_plutus_script_v2(plutus_script);
 export const scriptRef_newPlutusScript_v3 = plutus_script =>
-  CDL.ScriptRef.new_plutus_script_v1(plutus_script);
+  CDL.ScriptRef.new_plutus_script_v3(plutus_script);
 export const scriptRef_isNativeScript = self =>
   self.is_native_script.bind(self)();
 export const scriptRef_isPlutusScript = self =>
@@ -1418,8 +1342,6 @@ export const stakeAndVoteDelegation_drep = self => self.drep.bind(self)();
 export const stakeAndVoteDelegation_new =
   stake_credential => pool_keyhash => drep =>
     CDL.StakeAndVoteDelegation.new(stake_credential, pool_keyhash, drep);
-export const stakeAndVoteDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // StakeDelegation
 export const stakeDelegation_stakeCredential = self =>
@@ -1428,8 +1350,6 @@ export const stakeDelegation_poolKeyhash = self =>
   self.pool_keyhash.bind(self)();
 export const stakeDelegation_new = stake_credential => pool_keyhash =>
   CDL.StakeDelegation.new(stake_credential, pool_keyhash);
-export const stakeDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // StakeDeregistration
 export const stakeDeregistration_stakeCredential = self =>
@@ -1437,11 +1357,6 @@ export const stakeDeregistration_stakeCredential = self =>
 export const stakeDeregistration_coin = self => self.coin.bind(self)();
 export const stakeDeregistration_new = stake_credential =>
   CDL.StakeDeregistration.new(stake_credential);
-export const stakeDeregistration_newWithExplicitRefund =
-  stake_credential => coin =>
-    CDL.StakeDeregistration.new_with_explicit_refund(stake_credential, coin);
-export const stakeDeregistration_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // StakeRegistration
 export const stakeRegistration_stakeCredential = self =>
@@ -1449,11 +1364,6 @@ export const stakeRegistration_stakeCredential = self =>
 export const stakeRegistration_coin = self => self.coin.bind(self)();
 export const stakeRegistration_new = stake_credential =>
   CDL.StakeRegistration.new(stake_credential);
-export const stakeRegistration_newWithExplicitDeposit =
-  stake_credential => coin =>
-    CDL.StakeRegistration.new_with_explicit_deposit(stake_credential, coin);
-export const stakeRegistration_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // StakeRegistrationAndDelegation
 export const stakeRegistrationAndDelegation_stakeCredential = self =>
@@ -1469,8 +1379,6 @@ export const stakeRegistrationAndDelegation_new =
       pool_keyhash,
       coin
     );
-export const stakeRegistrationAndDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // StakeVoteRegistrationAndDelegation
 export const stakeVoteRegistrationAndDelegation_stakeCredential = self =>
@@ -1489,8 +1397,6 @@ export const stakeVoteRegistrationAndDelegation_new =
       drep,
       coin
     );
-export const stakeVoteRegistrationAndDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // TimelockExpiry
 export const timelockExpiry_slot = self => self.slot.bind(self)();
@@ -1834,8 +1740,6 @@ export const voteDelegation_stakeCredential = self =>
 export const voteDelegation_drep = self => self.drep.bind(self)();
 export const voteDelegation_new = stake_credential => drep =>
   CDL.VoteDelegation.new(stake_credential, drep);
-export const voteDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // VoteRegistrationAndDelegation
 export const voteRegistrationAndDelegation_stakeCredential = self =>
@@ -1847,8 +1751,6 @@ export const voteRegistrationAndDelegation_coin = self =>
 export const voteRegistrationAndDelegation_new =
   stake_credential => drep => coin =>
     CDL.VoteRegistrationAndDelegation.new(stake_credential, drep, coin);
-export const voteRegistrationAndDelegation_hasScriptCredentials = self =>
-  self.has_script_credentials.bind(self)();
 
 // Voter
 export const voter_newConstitutionalCommitteeHotCredential = cred =>

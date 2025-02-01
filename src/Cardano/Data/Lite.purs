@@ -93,7 +93,6 @@ module Cardano.Data.Lite
   , byronAddress_attributes
   , byronAddress_networkId
   , byronAddress_fromBase58
-  , byronAddress_icarusFromKey
   , byronAddress_isValid
   , byronAddress_toAddress
   , byronAddress_fromAddress
@@ -104,7 +103,6 @@ module Cardano.Data.Lite
   , certificate_newStakeDelegation
   , certificate_newPoolRegistration
   , certificate_newPoolRetirement
-  , certificate_newMoveInstantaneousRewardsCert
   , certificate_newCommitteeHotAuth
   , certificate_newCommitteeColdResign
   , certificate_newDrepDeregistration
@@ -123,8 +121,6 @@ module Cardano.Data.Lite
   , certificate_asStakeDelegation
   , certificate_asPoolRegistration
   , certificate_asPoolRetirement
-  , certificate_asGenesisKeyDelegation
-  , certificate_asMoveInstantaneousRewardsCert
   , certificate_asCommitteeHotAuth
   , certificate_asCommitteeColdResign
   , certificate_asDrepDeregistration
@@ -135,7 +131,6 @@ module Cardano.Data.Lite
   , certificate_asStakeVoteRegistrationAndDelegation
   , certificate_asVoteDelegation
   , certificate_asVoteRegistrationAndDelegation
-  , certificate_hasRequiredScriptWitness
   , certificates_new
   , changeConfig_new
   , changeConfig_changeAddress
@@ -150,11 +145,9 @@ module Cardano.Data.Lite
   , committeeColdResign_anchor
   , committeeColdResign_new
   , committeeColdResign_newWithAnchor
-  , committeeColdResign_hasScriptCredentials
   , committeeHotAuth_committeeColdCredential
   , committeeHotAuth_committeeHotCredential
   , committeeHotAuth_new
-  , committeeHotAuth_hasScriptCredentials
   , constitution_anchor
   , constitution_scriptHash
   , constitution_new
@@ -205,18 +198,15 @@ module Cardano.Data.Lite
   , dRepDeregistration_drepCredential
   , dRepDeregistration_coin
   , dRepDeregistration_new
-  , dRepDeregistration_hasScriptCredentials
   , dRepRegistration_votingCredential
   , dRepRegistration_coin
   , dRepRegistration_anchor
   , dRepRegistration_new
   , dRepRegistration_newWithAnchor
-  , dRepRegistration_hasScriptCredentials
   , dRepUpdate_drepCredential
   , dRepUpdate_anchor
   , dRepUpdate_new
   , dRepUpdate_newWithAnchor
-  , dRepUpdate_hasScriptCredentials
   , dRepVotingThresholds_new
   , dRepVotingThresholds_setMotionNoConfidence
   , dRepVotingThresholds_setCommitteeNormal
@@ -247,8 +237,6 @@ module Cardano.Data.Lite
   , ed25519KeyHash_toBech32
   , ed25519KeyHash_fromBech32
   , ed25519KeyHashes_new
-  , ed25519KeyHashes_contains
-  , ed25519KeyHashes_toOption
   , ed25519Signature_toBech32
   , ed25519Signature_fromBech32
   , enterpriseAddress_new
@@ -262,9 +250,6 @@ module Cardano.Data.Lite
   , exUnits_mem
   , exUnits_steps
   , exUnits_new
-  , fixedTxWitnessesSet_txWitnessesSet
-  , fixedTxWitnessesSet_addVkeyWitness
-  , fixedTxWitnessesSet_addBootstrapWitness
   , generalTransactionMetadata_new
   , genesisDelegateHash_toBech32
   , genesisDelegateHash_fromBech32
@@ -322,12 +307,9 @@ module Cardano.Data.Lite
   , language_kind
   , languages_new
   , languages_list
-  , legacyDaedalusPrivateKey_asBytes
-  , legacyDaedalusPrivateKey_chaincode
   , linearFee_constant
   , linearFee_coefficient
   , linearFee_new
-  , mirToStakeCredentials_new
   , malformedAddress_originalBytes
   , malformedAddress_toAddress
   , malformedAddress_fromAddress
@@ -345,14 +327,6 @@ module Cardano.Data.Lite
   , mintAssets_new
   , mintAssets_newFromEntry
   , mintsAssets_new
-  , moveInstantaneousReward_newToOtherPot
-  , moveInstantaneousReward_newToStakeCreds
-  , moveInstantaneousReward_pot
-  , moveInstantaneousReward_kind
-  , moveInstantaneousReward_asToOtherPot
-  , moveInstantaneousReward_asToStakeCreds
-  , moveInstantaneousRewardsCert_moveInstantaneousReward
-  , moveInstantaneousRewardsCert_new
   , multiAsset_new
   , multiAsset_setAsset
   , multiAsset_getAsset
@@ -392,7 +366,6 @@ module Cardano.Data.Lite
   , newConstitutionAction_constitution
   , newConstitutionAction_new
   , newConstitutionAction_newWithActionId
-  , newConstitutionAction_hasScriptHash
   , noConfidenceAction_govActionId
   , noConfidenceAction_new
   , noConfidenceAction_newWithActionId
@@ -450,12 +423,6 @@ module Cardano.Data.Lite
   , pointer_slotBignum
   , pointer_txIndexBignum
   , pointer_certIndexBignum
-  , pointerAddress_new
-  , pointerAddress_paymentCred
-  , pointerAddress_stakePointer
-  , pointerAddress_toAddress
-  , pointerAddress_fromAddress
-  , pointerAddress_networkId
   , poolMetadata_url
   , poolMetadata_poolMetadataHash
   , poolMetadata_new
@@ -637,32 +604,24 @@ module Cardano.Data.Lite
   , stakeAndVoteDelegation_poolKeyhash
   , stakeAndVoteDelegation_drep
   , stakeAndVoteDelegation_new
-  , stakeAndVoteDelegation_hasScriptCredentials
   , stakeDelegation_stakeCredential
   , stakeDelegation_poolKeyhash
   , stakeDelegation_new
-  , stakeDelegation_hasScriptCredentials
   , stakeDeregistration_stakeCredential
   , stakeDeregistration_coin
   , stakeDeregistration_new
-  , stakeDeregistration_newWithExplicitRefund
-  , stakeDeregistration_hasScriptCredentials
   , stakeRegistration_stakeCredential
   , stakeRegistration_coin
   , stakeRegistration_new
-  , stakeRegistration_newWithExplicitDeposit
-  , stakeRegistration_hasScriptCredentials
   , stakeRegistrationAndDelegation_stakeCredential
   , stakeRegistrationAndDelegation_poolKeyhash
   , stakeRegistrationAndDelegation_coin
   , stakeRegistrationAndDelegation_new
-  , stakeRegistrationAndDelegation_hasScriptCredentials
   , stakeVoteRegistrationAndDelegation_stakeCredential
   , stakeVoteRegistrationAndDelegation_poolKeyhash
   , stakeVoteRegistrationAndDelegation_drep
   , stakeVoteRegistrationAndDelegation_coin
   , stakeVoteRegistrationAndDelegation_new
-  , stakeVoteRegistrationAndDelegation_hasScriptCredentials
   , timelockExpiry_slot
   , timelockExpiry_slotBignum
   , timelockExpiry_new
@@ -823,12 +782,10 @@ module Cardano.Data.Lite
   , voteDelegation_stakeCredential
   , voteDelegation_drep
   , voteDelegation_new
-  , voteDelegation_hasScriptCredentials
   , voteRegistrationAndDelegation_stakeCredential
   , voteRegistrationAndDelegation_drep
   , voteRegistrationAndDelegation_coin
   , voteRegistrationAndDelegation_new
-  , voteRegistrationAndDelegation_hasScriptCredentials
   , voter_newConstitutionalCommitteeHotCredential
   , voter_newDrepCredential
   , voter_newStakePoolKeyHash
@@ -919,7 +876,6 @@ module Cardano.Data.Lite
   , EnterpriseAddress
   , ExUnitPrices
   , ExUnits
-  , FixedTxWitnessesSet
   , GeneralTransactionMetadata
   , GenesisDelegateHash
   , GenesisHash
@@ -937,17 +893,13 @@ module Cardano.Data.Lite
   , KESVKey
   , Language
   , Languages
-  , LegacyDaedalusPrivateKey
   , LinearFee
-  , MIRToStakeCredentials
   , MalformedAddress
   , MetadataList
   , MetadataMap
   , Mint
   , MintAssets
   , MintsAssets
-  , MoveInstantaneousReward
-  , MoveInstantaneousRewardsCert
   , MultiAsset
   , MultiHostName
   , NativeScript
@@ -968,7 +920,6 @@ module Cardano.Data.Lite
   , PlutusScript
   , PlutusScripts
   , Pointer
-  , PointerAddress
   , PoolMetadata
   , PoolMetadataHash
   , PoolParams
@@ -1554,7 +1505,6 @@ foreign import byronAddress_byronProtocolMagic :: ByronAddress -> Number
 foreign import byronAddress_attributes :: ByronAddress -> ByteArray
 foreign import byronAddress_networkId :: ByronAddress -> Number
 foreign import byronAddress_fromBase58 :: String -> Nullable ByronAddress
-foreign import byronAddress_icarusFromKey :: Bip32PublicKey -> Number -> ByronAddress
 foreign import byronAddress_isValid :: String -> Boolean
 foreign import byronAddress_toAddress :: ByronAddress -> Address
 foreign import byronAddress_fromAddress :: Address -> Nullable ByronAddress
@@ -1584,7 +1534,6 @@ foreign import certificate_newUnregCert :: StakeDeregistration -> Certificate
 foreign import certificate_newStakeDelegation :: StakeDelegation -> Certificate
 foreign import certificate_newPoolRegistration :: PoolRegistration -> Certificate
 foreign import certificate_newPoolRetirement :: PoolRetirement -> Certificate
-foreign import certificate_newMoveInstantaneousRewardsCert :: MoveInstantaneousRewardsCert -> Certificate
 foreign import certificate_newCommitteeHotAuth :: CommitteeHotAuth -> Certificate
 foreign import certificate_newCommitteeColdResign :: CommitteeColdResign -> Certificate
 foreign import certificate_newDrepDeregistration :: DRepDeregistration -> Certificate
@@ -1603,8 +1552,6 @@ foreign import certificate_asUnregCert :: Certificate -> Nullable StakeDeregistr
 foreign import certificate_asStakeDelegation :: Certificate -> Nullable StakeDelegation
 foreign import certificate_asPoolRegistration :: Certificate -> Nullable PoolRegistration
 foreign import certificate_asPoolRetirement :: Certificate -> Nullable PoolRetirement
-foreign import certificate_asGenesisKeyDelegation :: Certificate -> Nullable GenesisKeyDelegation
-foreign import certificate_asMoveInstantaneousRewardsCert :: Certificate -> Nullable MoveInstantaneousRewardsCert
 foreign import certificate_asCommitteeHotAuth :: Certificate -> Nullable CommitteeHotAuth
 foreign import certificate_asCommitteeColdResign :: Certificate -> Nullable CommitteeColdResign
 foreign import certificate_asDrepDeregistration :: Certificate -> Nullable DRepDeregistration
@@ -1615,7 +1562,6 @@ foreign import certificate_asStakeRegistrationAndDelegation :: Certificate -> Nu
 foreign import certificate_asStakeVoteRegistrationAndDelegation :: Certificate -> Nullable StakeVoteRegistrationAndDelegation
 foreign import certificate_asVoteDelegation :: Certificate -> Nullable VoteDelegation
 foreign import certificate_asVoteRegistrationAndDelegation :: Certificate -> Nullable VoteRegistrationAndDelegation
-foreign import certificate_hasRequiredScriptWitness :: Certificate -> Boolean
 
 instance IsCsl Certificate where
   className _ = "Certificate"
@@ -1701,7 +1647,6 @@ foreign import committeeColdResign_committeeColdCredential :: CommitteeColdResig
 foreign import committeeColdResign_anchor :: CommitteeColdResign -> Nullable Anchor
 foreign import committeeColdResign_new :: Credential -> CommitteeColdResign
 foreign import committeeColdResign_newWithAnchor :: Credential -> Anchor -> CommitteeColdResign
-foreign import committeeColdResign_hasScriptCredentials :: CommitteeColdResign -> Boolean
 
 instance IsCsl CommitteeColdResign where
   className _ = "CommitteeColdResign"
@@ -1725,7 +1670,6 @@ foreign import data CommitteeHotAuth :: Type
 foreign import committeeHotAuth_committeeColdCredential :: CommitteeHotAuth -> Credential
 foreign import committeeHotAuth_committeeHotCredential :: CommitteeHotAuth -> Credential
 foreign import committeeHotAuth_new :: Credential -> Credential -> CommitteeHotAuth
-foreign import committeeHotAuth_hasScriptCredentials :: CommitteeHotAuth -> Boolean
 
 instance IsCsl CommitteeHotAuth where
   className _ = "CommitteeHotAuth"
@@ -2019,7 +1963,6 @@ foreign import data DRepDeregistration :: Type
 foreign import dRepDeregistration_drepCredential :: DRepDeregistration -> Credential
 foreign import dRepDeregistration_coin :: DRepDeregistration -> BigNum
 foreign import dRepDeregistration_new :: Credential -> BigNum -> DRepDeregistration
-foreign import dRepDeregistration_hasScriptCredentials :: DRepDeregistration -> Boolean
 
 instance IsCsl DRepDeregistration where
   className _ = "DRepDeregistration"
@@ -2045,7 +1988,6 @@ foreign import dRepRegistration_coin :: DRepRegistration -> BigNum
 foreign import dRepRegistration_anchor :: DRepRegistration -> Nullable Anchor
 foreign import dRepRegistration_new :: Credential -> BigNum -> DRepRegistration
 foreign import dRepRegistration_newWithAnchor :: Credential -> BigNum -> Anchor -> DRepRegistration
-foreign import dRepRegistration_hasScriptCredentials :: DRepRegistration -> Boolean
 
 instance IsCsl DRepRegistration where
   className _ = "DRepRegistration"
@@ -2070,7 +2012,6 @@ foreign import dRepUpdate_drepCredential :: DRepUpdate -> Credential
 foreign import dRepUpdate_anchor :: DRepUpdate -> Nullable Anchor
 foreign import dRepUpdate_new :: Credential -> DRepUpdate
 foreign import dRepUpdate_newWithAnchor :: Credential -> Anchor -> DRepUpdate
-foreign import dRepUpdate_hasScriptCredentials :: DRepUpdate -> Boolean
 
 instance IsCsl DRepUpdate where
   className _ = "DRepUpdate"
@@ -2197,8 +2138,6 @@ instance Show Ed25519KeyHash where
 foreign import data Ed25519KeyHashes :: Type
 
 foreign import ed25519KeyHashes_new :: Ed25519KeyHashes
-foreign import ed25519KeyHashes_contains :: Ed25519KeyHashes -> Ed25519KeyHash -> Boolean
-foreign import ed25519KeyHashes_toOption :: Ed25519KeyHashes -> Nullable Ed25519KeyHashes
 
 instance IsCsl Ed25519KeyHashes where
   className _ = "Ed25519KeyHashes"
@@ -2297,27 +2236,6 @@ instance DecodeAeson ExUnits where
 instance Show ExUnits where
   show = showViaJson
 
---------------------------------------------------------------------------------
--- Fixed tx witnesses set
-
-foreign import data FixedTxWitnessesSet :: Type
-
-foreign import fixedTxWitnessesSet_txWitnessesSet :: FixedTxWitnessesSet -> TransactionWitnessSet
-foreign import fixedTxWitnessesSet_addVkeyWitness :: FixedTxWitnessesSet -> Vkeywitness -> Effect Unit
-foreign import fixedTxWitnessesSet_addBootstrapWitness :: FixedTxWitnessesSet -> BootstrapWitness -> Effect Unit
-
-instance IsCsl FixedTxWitnessesSet where
-  className _ = "FixedTxWitnessesSet"
-
-instance IsBytes FixedTxWitnessesSet
-instance EncodeAeson FixedTxWitnessesSet where
-  encodeAeson = cslToAesonViaBytes
-
-instance DecodeAeson FixedTxWitnessesSet where
-  decodeAeson = cslFromAesonViaBytes
-
-instance Show FixedTxWitnessesSet where
-  show = showViaBytes
 
 --------------------------------------------------------------------------------
 -- General transaction metadata
@@ -2697,17 +2615,6 @@ instance IsCsl Languages where
 instance IsListContainer Languages Language
 
 --------------------------------------------------------------------------------
--- Legacy daedalus private key
-
-foreign import data LegacyDaedalusPrivateKey :: Type
-
-foreign import legacyDaedalusPrivateKey_asBytes :: LegacyDaedalusPrivateKey -> ByteArray
-foreign import legacyDaedalusPrivateKey_chaincode :: LegacyDaedalusPrivateKey -> ByteArray
-
-instance IsCsl LegacyDaedalusPrivateKey where
-  className _ = "LegacyDaedalusPrivateKey"
-
---------------------------------------------------------------------------------
 -- Linear fee
 
 foreign import data LinearFee :: Type
@@ -2718,29 +2625,6 @@ foreign import linearFee_new :: BigNum -> BigNum -> LinearFee
 
 instance IsCsl LinearFee where
   className _ = "LinearFee"
-
---------------------------------------------------------------------------------
--- MIRTo stake credentials
-
-foreign import data MIRToStakeCredentials :: Type
-
-foreign import mirToStakeCredentials_new :: Effect MIRToStakeCredentials
-
-instance IsCsl MIRToStakeCredentials where
-  className _ = "MIRToStakeCredentials"
-
-instance IsBytes MIRToStakeCredentials
-instance IsJson MIRToStakeCredentials
-instance EncodeAeson MIRToStakeCredentials where
-  encodeAeson = cslToAeson
-
-instance DecodeAeson MIRToStakeCredentials where
-  decodeAeson = cslFromAeson
-
-instance Show MIRToStakeCredentials where
-  show = showViaJson
-
-instance IsMapContainer MIRToStakeCredentials Credential Int
 
 --------------------------------------------------------------------------------
 -- Malformed address
@@ -2863,54 +2747,6 @@ instance Show MintsAssets where
   show = showViaJson
 
 instance IsListContainer MintsAssets MintAssets
-
---------------------------------------------------------------------------------
--- Move instantaneous reward
-
-foreign import data MoveInstantaneousReward :: Type
-
-foreign import moveInstantaneousReward_newToOtherPot :: MIRPot -> BigNum -> MoveInstantaneousReward
-foreign import moveInstantaneousReward_newToStakeCreds :: MIRPot -> MIRToStakeCredentials -> MoveInstantaneousReward
-foreign import moveInstantaneousReward_pot :: MoveInstantaneousReward -> MIRPot
-foreign import moveInstantaneousReward_kind :: MoveInstantaneousReward -> MIRKind
-foreign import moveInstantaneousReward_asToOtherPot :: MoveInstantaneousReward -> Nullable BigNum
-foreign import moveInstantaneousReward_asToStakeCreds :: MoveInstantaneousReward -> Nullable MIRToStakeCredentials
-
-instance IsCsl MoveInstantaneousReward where
-  className _ = "MoveInstantaneousReward"
-
-instance IsBytes MoveInstantaneousReward
-instance IsJson MoveInstantaneousReward
-instance EncodeAeson MoveInstantaneousReward where
-  encodeAeson = cslToAeson
-
-instance DecodeAeson MoveInstantaneousReward where
-  decodeAeson = cslFromAeson
-
-instance Show MoveInstantaneousReward where
-  show = showViaJson
-
---------------------------------------------------------------------------------
--- Move instantaneous rewards cert
-
-foreign import data MoveInstantaneousRewardsCert :: Type
-
-foreign import moveInstantaneousRewardsCert_moveInstantaneousReward :: MoveInstantaneousRewardsCert -> MoveInstantaneousReward
-foreign import moveInstantaneousRewardsCert_new :: MoveInstantaneousReward -> MoveInstantaneousRewardsCert
-
-instance IsCsl MoveInstantaneousRewardsCert where
-  className _ = "MoveInstantaneousRewardsCert"
-
-instance IsBytes MoveInstantaneousRewardsCert
-instance IsJson MoveInstantaneousRewardsCert
-instance EncodeAeson MoveInstantaneousRewardsCert where
-  encodeAeson = cslToAeson
-
-instance DecodeAeson MoveInstantaneousRewardsCert where
-  decodeAeson = cslFromAeson
-
-instance Show MoveInstantaneousRewardsCert where
-  show = showViaJson
 
 --------------------------------------------------------------------------------
 -- Multi asset
@@ -3078,7 +2914,6 @@ foreign import newConstitutionAction_govActionId :: NewConstitutionAction -> Nul
 foreign import newConstitutionAction_constitution :: NewConstitutionAction -> Constitution
 foreign import newConstitutionAction_new :: Constitution -> NewConstitutionAction
 foreign import newConstitutionAction_newWithActionId :: GovernanceActionId -> Constitution -> NewConstitutionAction
-foreign import newConstitutionAction_hasScriptHash :: NewConstitutionAction -> Boolean
 
 instance IsCsl NewConstitutionAction where
   className _ = "NewConstitutionAction"
@@ -3363,21 +3198,6 @@ foreign import pointer_certIndexBignum :: Pointer -> BigNum
 
 instance IsCsl Pointer where
   className _ = "Pointer"
-
---------------------------------------------------------------------------------
--- Pointer address
-
-foreign import data PointerAddress :: Type
-
-foreign import pointerAddress_new :: Number -> Credential -> Pointer -> PointerAddress
-foreign import pointerAddress_paymentCred :: PointerAddress -> Credential
-foreign import pointerAddress_stakePointer :: PointerAddress -> Pointer
-foreign import pointerAddress_toAddress :: PointerAddress -> Address
-foreign import pointerAddress_fromAddress :: Address -> Nullable PointerAddress
-foreign import pointerAddress_networkId :: PointerAddress -> Number
-
-instance IsCsl PointerAddress where
-  className _ = "PointerAddress"
 
 --------------------------------------------------------------------------------
 -- Pool metadata
@@ -4099,7 +3919,6 @@ foreign import stakeAndVoteDelegation_stakeCredential :: StakeAndVoteDelegation 
 foreign import stakeAndVoteDelegation_poolKeyhash :: StakeAndVoteDelegation -> Ed25519KeyHash
 foreign import stakeAndVoteDelegation_drep :: StakeAndVoteDelegation -> DRep
 foreign import stakeAndVoteDelegation_new :: Credential -> Ed25519KeyHash -> DRep -> StakeAndVoteDelegation
-foreign import stakeAndVoteDelegation_hasScriptCredentials :: StakeAndVoteDelegation -> Boolean
 
 instance IsCsl StakeAndVoteDelegation where
   className _ = "StakeAndVoteDelegation"
@@ -4123,7 +3942,6 @@ foreign import data StakeDelegation :: Type
 foreign import stakeDelegation_stakeCredential :: StakeDelegation -> Credential
 foreign import stakeDelegation_poolKeyhash :: StakeDelegation -> Ed25519KeyHash
 foreign import stakeDelegation_new :: Credential -> Ed25519KeyHash -> StakeDelegation
-foreign import stakeDelegation_hasScriptCredentials :: StakeDelegation -> Boolean
 
 instance IsCsl StakeDelegation where
   className _ = "StakeDelegation"
@@ -4147,8 +3965,6 @@ foreign import data StakeDeregistration :: Type
 foreign import stakeDeregistration_stakeCredential :: StakeDeregistration -> Credential
 foreign import stakeDeregistration_coin :: StakeDeregistration -> Nullable BigNum
 foreign import stakeDeregistration_new :: Credential -> StakeDeregistration
-foreign import stakeDeregistration_newWithExplicitRefund :: Credential -> BigNum -> StakeDeregistration
-foreign import stakeDeregistration_hasScriptCredentials :: StakeDeregistration -> Boolean
 
 instance IsCsl StakeDeregistration where
   className _ = "StakeDeregistration"
@@ -4172,8 +3988,6 @@ foreign import data StakeRegistration :: Type
 foreign import stakeRegistration_stakeCredential :: StakeRegistration -> Credential
 foreign import stakeRegistration_coin :: StakeRegistration -> Nullable BigNum
 foreign import stakeRegistration_new :: Credential -> StakeRegistration
-foreign import stakeRegistration_newWithExplicitDeposit :: Credential -> BigNum -> StakeRegistration
-foreign import stakeRegistration_hasScriptCredentials :: StakeRegistration -> Boolean
 
 instance IsCsl StakeRegistration where
   className _ = "StakeRegistration"
@@ -4198,7 +4012,6 @@ foreign import stakeRegistrationAndDelegation_stakeCredential :: StakeRegistrati
 foreign import stakeRegistrationAndDelegation_poolKeyhash :: StakeRegistrationAndDelegation -> Ed25519KeyHash
 foreign import stakeRegistrationAndDelegation_coin :: StakeRegistrationAndDelegation -> BigNum
 foreign import stakeRegistrationAndDelegation_new :: Credential -> Ed25519KeyHash -> BigNum -> StakeRegistrationAndDelegation
-foreign import stakeRegistrationAndDelegation_hasScriptCredentials :: StakeRegistrationAndDelegation -> Boolean
 
 instance IsCsl StakeRegistrationAndDelegation where
   className _ = "StakeRegistrationAndDelegation"
@@ -4224,7 +4037,6 @@ foreign import stakeVoteRegistrationAndDelegation_poolKeyhash :: StakeVoteRegist
 foreign import stakeVoteRegistrationAndDelegation_drep :: StakeVoteRegistrationAndDelegation -> DRep
 foreign import stakeVoteRegistrationAndDelegation_coin :: StakeVoteRegistrationAndDelegation -> BigNum
 foreign import stakeVoteRegistrationAndDelegation_new :: Credential -> Ed25519KeyHash -> DRep -> BigNum -> StakeVoteRegistrationAndDelegation
-foreign import stakeVoteRegistrationAndDelegation_hasScriptCredentials :: StakeVoteRegistrationAndDelegation -> Boolean
 
 instance IsCsl StakeVoteRegistrationAndDelegation where
   className _ = "StakeVoteRegistrationAndDelegation"
@@ -4977,7 +4789,6 @@ foreign import data VoteDelegation :: Type
 foreign import voteDelegation_stakeCredential :: VoteDelegation -> Credential
 foreign import voteDelegation_drep :: VoteDelegation -> DRep
 foreign import voteDelegation_new :: Credential -> DRep -> VoteDelegation
-foreign import voteDelegation_hasScriptCredentials :: VoteDelegation -> Boolean
 
 instance IsCsl VoteDelegation where
   className _ = "VoteDelegation"
@@ -5002,7 +4813,6 @@ foreign import voteRegistrationAndDelegation_stakeCredential :: VoteRegistration
 foreign import voteRegistrationAndDelegation_drep :: VoteRegistrationAndDelegation -> DRep
 foreign import voteRegistrationAndDelegation_coin :: VoteRegistrationAndDelegation -> BigNum
 foreign import voteRegistrationAndDelegation_new :: Credential -> DRep -> BigNum -> VoteRegistrationAndDelegation
-foreign import voteRegistrationAndDelegation_hasScriptCredentials :: VoteRegistrationAndDelegation -> Boolean
 
 instance IsCsl VoteRegistrationAndDelegation where
   className _ = "VoteRegistrationAndDelegation"
