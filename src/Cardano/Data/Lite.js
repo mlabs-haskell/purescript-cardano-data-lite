@@ -183,7 +183,7 @@ export const byronAddress_fromBase58 = s =>
 export const byronAddress_isValid = s => CDL.ByronAddress.is_valid(s);
 export const byronAddress_toAddress = self => self.to_address.bind(self)();
 export const byronAddress_fromAddress = addr =>
-  CDL.ByronAddress.from_address(addr);
+  undefinedToPurs(CDL.ByronAddress.from_address, addr);
 
 // Certificate
 export const certificate_newStakeRegistration = stake_registration =>
@@ -232,37 +232,37 @@ export const certificate_newVoteRegistrationAndDelegation =
     );
 export const certificate_kind = self => self.kind.bind(self)();
 export const certificate_asStakeRegistration = self =>
-  self.as_stake_registration.bind(self)();
-export const certificate_asRegCert = self => self.as_reg_cert.bind(self)();
+  undefinedToPurs(self.as_stake_registration.bind(self));
+export const certificate_asRegCert = self => undefinedToPurs(self.as_reg_cert.bind(self));
 export const certificate_asStakeDeregistration = self =>
-  self.as_stake_deregistration.bind(self)();
-export const certificate_asUnregCert = self => self.as_unreg_cert.bind(self)();
+  undefinedToPurs(self.as_stake_deregistration.bind(self));
+export const certificate_asUnregCert = self => undefinedToPurs(self.as_unreg_cert.bind(self));
 export const certificate_asStakeDelegation = self =>
-  self.as_stake_delegation.bind(self)();
+  undefinedToPurs(self.as_stake_delegation.bind(self));
 export const certificate_asPoolRegistration = self =>
-  self.as_pool_registration.bind(self)();
+  undefinedToPurs(self.as_pool_registration.bind(self));
 export const certificate_asPoolRetirement = self =>
-  self.as_pool_retirement.bind(self)();
+  undefinedToPurs(self.as_pool_retirement.bind(self));
 export const certificate_asCommitteeHotAuth = self =>
-  self.as_committee_hot_auth.bind(self)();
+  undefinedToPurs(self.as_committee_hot_auth.bind(self));
 export const certificate_asCommitteeColdResign = self =>
-  self.as_committee_cold_resign.bind(self)();
+  undefinedToPurs(self.as_committee_cold_resign.bind(self));
 export const certificate_asDrepDeregistration = self =>
-  self.as_drep_deregistration.bind(self)();
+  undefinedToPurs(self.as_drep_deregistration.bind(self));
 export const certificate_asDrepRegistration = self =>
-  self.as_drep_registration.bind(self)();
+  undefinedToPurs(self.as_drep_registration.bind(self));
 export const certificate_asDrepUpdate = self =>
-  self.as_drep_update.bind(self)();
+  undefinedToPurs(self.as_drep_update.bind(self));
 export const certificate_asStakeAndVoteDelegation = self =>
-  self.as_stake_and_vote_delegation.bind(self)();
+  undefinedToPurs(self.as_stake_and_vote_delegation.bind(self));
 export const certificate_asStakeRegistrationAndDelegation = self =>
-  self.as_stake_registration_and_delegation.bind(self)();
+  undefinedToPurs(self.as_stake_registration_and_delegation.bind(self));
 export const certificate_asStakeVoteRegistrationAndDelegation = self =>
-  self.as_stake_vote_registration_and_delegation.bind(self)();
+  undefinedToPurs(self.as_stake_vote_registration_and_delegation.bind(self));
 export const certificate_asVoteDelegation = self =>
-  self.as_vote_delegation.bind(self)();
+  undefinedToPurs(self.as_vote_delegation.bind(self));
 export const certificate_asVoteRegistrationAndDelegation = self =>
-  self.as_vote_registration_and_delegation.bind(self)();
+  undefinedToPurs(self.as_vote_registration_and_delegation.bind(self));
 
 // Certificates
 export const certificates_new = () => CDL.Certificates.new();
@@ -532,7 +532,7 @@ export const enterpriseAddress_paymentCred = self =>
   self.payment_cred.bind(self)();
 export const enterpriseAddress_toAddress = self => self.to_address.bind(self)();
 export const enterpriseAddress_fromAddress = addr =>
-  CDL.EnterpriseAddress.from_address(addr);
+  undefinedToPurs(CDL.EnterpriseAddress.from_address, addr);
 export const enterpriseAddress_networkId = self => self.network_id.bind(self)();
 
 // ExUnitPrices
@@ -696,7 +696,7 @@ export const malformedAddress_originalBytes = self =>
   self.original_bytes.bind(self)();
 export const malformedAddress_toAddress = self => self.to_address.bind(self)();
 export const malformedAddress_fromAddress = addr =>
-  CDL.MalformedAddress.from_address(addr);
+  undefinedToPurs(CDL.MalformedAddress.from_address, addr);
 
 // MetadataList
 export const metadataList_new = () => CDL.MetadataList.new();
@@ -1257,7 +1257,7 @@ export const rewardAddress_new = network => payment =>
 export const rewardAddress_paymentCred = self => self.payment_cred.bind(self)();
 export const rewardAddress_toAddress = self => self.to_address.bind(self)();
 export const rewardAddress_fromAddress = addr =>
-  CDL.RewardAddress.from_address(addr);
+  undefinedToPurs(CDL.RewardAddress.from_address, addr);
 export const rewardAddress_networkId = self => self.network_id.bind(self)();
 
 // RewardAddresses
@@ -1620,7 +1620,7 @@ export const transactionWitnessSet_plutusScripts_v3 = self => undefinedToPurs(se
 export const transactionWitnessSet_setPlutusData = self => plutus_data => () =>
   self.set_plutus_data.bind(self)(plutus_data);
 export const transactionWitnessSet_plutusData = self =>
-  self.plutus_data.bind(self)();
+  undefinedToPurs(self.plutus_data.bind(self));
 export const transactionWitnessSet_setRedeemers = self => redeemers => () =>
   self.set_redeemers.bind(self)(redeemers);
 export const transactionWitnessSet_redeemers = self =>
