@@ -605,21 +605,6 @@ export const genesisHash_fromBech32 = bech_str =>
 // GenesisHashes
 export const genesisHashes_new = () => CDL.GenesisHashes.new();
 
-// GenesisKeyDelegation
-export const genesisKeyDelegation_genesishash = self =>
-  self.genesishash.bind(self)();
-export const genesisKeyDelegation_genesisDelegateHash = self =>
-  self.genesis_delegate_hash.bind(self)();
-export const genesisKeyDelegation_vrfKeyhash = self =>
-  self.vrf_keyhash.bind(self)();
-export const genesisKeyDelegation_new =
-  genesishash => genesis_delegate_hash => vrf_keyhash =>
-    CDL.GenesisKeyDelegation.new(
-      genesishash,
-      genesis_delegate_hash,
-      vrf_keyhash
-    );
-
 // GovernanceAction
 export const governanceAction_newParameterChangeAction =
   parameter_change_action =>
@@ -967,19 +952,6 @@ export const plutusScript_hash = self => number => self.hash(number);
 
 // PlutusScripts
 export const plutusScripts_new = () => CDL.PlutusScripts.new();
-
-// Pointer
-export const pointer_new = slot => tx_index => cert_index =>
-  CDL.Pointer.new(slot, tx_index, cert_index);
-export const pointer_newPointer = slot => tx_index => cert_index =>
-  CDL.Pointer.new_pointer(slot, tx_index, cert_index);
-export const pointer_slot = self => self.slot.bind(self)();
-export const pointer_txIndex = self => self.tx_index.bind(self)();
-export const pointer_certIndex = self => self.cert_index.bind(self)();
-export const pointer_slotBignum = self => self.slot_bignum.bind(self)();
-export const pointer_txIndexBignum = self => self.tx_index_bignum.bind(self)();
-export const pointer_certIndexBignum = self =>
-  self.cert_index_bignum.bind(self)();
 
 // PoolMetadata
 export const poolMetadata_url = self => self.url.bind(self)();

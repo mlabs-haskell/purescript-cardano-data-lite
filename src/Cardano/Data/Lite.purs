@@ -416,14 +416,6 @@ module Cardano.Data.Lite
   , plutusScript_fromHex
   , plutusScript_hash
   , plutusScripts_new
-  , pointer_new
-  , pointer_newPointer
-  , pointer_slot
-  , pointer_txIndex
-  , pointer_certIndex
-  , pointer_slotBignum
-  , pointer_txIndexBignum
-  , pointer_certIndexBignum
   , poolMetadata_url
   , poolMetadata_poolMetadataHash
   , poolMetadata_new
@@ -883,7 +875,6 @@ module Cardano.Data.Lite
   , GenesisDelegateHash
   , GenesisHash
   , GenesisHashes
-  , GenesisKeyDelegation
   , GovernanceAction
   , GovernanceActionId
   , GovernanceActionIds
@@ -922,7 +913,6 @@ module Cardano.Data.Lite
   , PlutusMapValues
   , PlutusScript
   , PlutusScripts
-  , Pointer
   , PoolMetadata
   , PoolMetadataHash
   , PoolParams
@@ -2345,30 +2335,6 @@ instance Show GenesisHashes where
 instance IsListContainer GenesisHashes GenesisHash
 
 --------------------------------------------------------------------------------
--- Genesis key delegation
-
-foreign import data GenesisKeyDelegation :: Type
-
-foreign import genesisKeyDelegation_genesishash :: GenesisKeyDelegation -> GenesisHash
-foreign import genesisKeyDelegation_genesisDelegateHash :: GenesisKeyDelegation -> GenesisDelegateHash
-foreign import genesisKeyDelegation_vrfKeyhash :: GenesisKeyDelegation -> VRFKeyHash
-foreign import genesisKeyDelegation_new :: GenesisHash -> GenesisDelegateHash -> VRFKeyHash -> GenesisKeyDelegation
-
-instance IsCsl GenesisKeyDelegation where
-  className _ = "GenesisKeyDelegation"
-
-instance IsBytes GenesisKeyDelegation
-instance IsJson GenesisKeyDelegation
-instance EncodeAeson GenesisKeyDelegation where
-  encodeAeson = cslToAeson
-
-instance DecodeAeson GenesisKeyDelegation where
-  decodeAeson = cslFromAeson
-
-instance Show GenesisKeyDelegation where
-  show = showViaJson
-
---------------------------------------------------------------------------------
 -- Governance action
 
 foreign import data GovernanceAction :: Type
@@ -3200,23 +3166,6 @@ instance Show PlutusScripts where
   show = showViaJson
 
 instance IsListContainer PlutusScripts PlutusScript
-
---------------------------------------------------------------------------------
--- Pointer
-
-foreign import data Pointer :: Type
-
-foreign import pointer_new :: Number -> Number -> Number -> Pointer
-foreign import pointer_newPointer :: BigNum -> BigNum -> BigNum -> Pointer
-foreign import pointer_slot :: Pointer -> Number
-foreign import pointer_txIndex :: Pointer -> Number
-foreign import pointer_certIndex :: Pointer -> Number
-foreign import pointer_slotBignum :: Pointer -> BigNum
-foreign import pointer_txIndexBignum :: Pointer -> BigNum
-foreign import pointer_certIndexBignum :: Pointer -> BigNum
-
-instance IsCsl Pointer where
-  className _ = "Pointer"
 
 --------------------------------------------------------------------------------
 -- Pool metadata
@@ -5136,7 +5085,6 @@ data CertificateKindValues
   | CertificateKind_StakeDelegation
   | CertificateKind_PoolRegistration
   | CertificateKind_PoolRetirement
-  | CertificateKind_GenesisKeyDelegation
   | CertificateKind_MoveInstantaneousRewardsCert
   | CertificateKind_CommitteeHotAuth
   | CertificateKind_CommitteeColdResign
@@ -5382,7 +5330,6 @@ foreign import data AddressKind :: Type
 
 data AddressKindValues
   = AddressKind_Base
-  | AddressKind_Pointer
   | AddressKind_Enterprise
   | AddressKind_Reward
   | AddressKind_Byron
