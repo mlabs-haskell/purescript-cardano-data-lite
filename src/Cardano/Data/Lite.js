@@ -13,7 +13,6 @@ function errorableToPurs(f, ...vars) {
   }
 }
 
-
 // Pass in a function and its list of arguments, that is expected to return undefined, wraps in Either
 // eslint-disable-next-line no-unused-vars
 function undefinedToPurs(f, ...vars) {
@@ -27,7 +26,8 @@ function undefinedToPurs(f, ...vars) {
 
 // Address
 export const address_kind = self => self.kind.bind(self)();
-export const address_paymentCred = self => undefinedToPurs(self.payment_cred.bind(self));
+export const address_paymentCred = self =>
+  undefinedToPurs(self.payment_cred.bind(self));
 export const address_isMalformed = self => self.is_malformed.bind(self)();
 export const address_toBech32 = self => prefix =>
   self.to_bech32.bind(self)(prefix);
@@ -42,7 +42,8 @@ export const anchor_new = anchor_url => anchor_data_hash =>
   CDL.Anchor.new(anchor_url, anchor_data_hash);
 
 // AnchorDataHash
-export const anchorDataHash_toBech32 = self => prefix => errorableToPurs(self.to_bech32.bind(self), prefix);
+export const anchorDataHash_toBech32 = self => prefix =>
+  errorableToPurs(self.to_bech32.bind(self), prefix);
 export const anchorDataHash_fromBech32 = bech_str =>
   errorableToPurs(CDL.AnchorDataHash.from_bech32, bech_str);
 
@@ -57,37 +58,51 @@ export const assetNames_new = () => CDL.AssetNames.new();
 export const assets_new = () => CDL.Assets.new();
 
 // AuxiliaryData
-export const auxiliaryData_newShelleyMetadata =
-  metadata => CDL.AuxiliaryData.new_shelley_metadata(metadata);
-export const auxiliaryData_newShelleyMetadataMa =
-  metadata => CDL.AuxiliaryData.new_shelley_metadata_ma(metadata);
-export const auxiliaryData_newPostAlonzoMetadata =
-  metadata => CDL.AuxiliaryData.new_postalonzo_metadata(metadata);
-export const auxiliaryData_metadata = self => undefinedToPurs(self.metadata.bind(self));
+export const auxiliaryData_newShelleyMetadata = metadata =>
+  CDL.AuxiliaryData.new_shelley_metadata(metadata);
+export const auxiliaryData_newShelleyMetadataMa = metadata =>
+  CDL.AuxiliaryData.new_shelley_metadata_ma(metadata);
+export const auxiliaryData_newPostAlonzoMetadata = metadata =>
+  CDL.AuxiliaryData.new_postalonzo_metadata(metadata);
+export const auxiliaryData_metadata = self =>
+  undefinedToPurs(self.metadata.bind(self));
 export const auxiliaryData_setMetadata = self => metadata => () =>
   self.set_metadata.bind(self)(metadata);
-export const auxiliaryData_nativeScripts = self => undefinedToPurs(self.native_scripts.bind(self));
+export const auxiliaryData_nativeScripts = self =>
+  undefinedToPurs(self.native_scripts.bind(self));
 export const auxiliaryData_setNativeScripts = self => native_scripts => () =>
   self.set_native_scripts.bind(self)(native_scripts);
-export const auxiliaryData_plutusScripts_v1 = self => undefinedToPurs(self.plutus_scripts_v1.bind(self));
-export const auxiliaryData_plutusScripts_v2 = self => undefinedToPurs(self.plutus_scripts_v2.bind(self));
-export const auxiliaryData_plutusScripts_v3 = self => undefinedToPurs(self.plutus_scripts_v3.bind(self));
-export const auxiliaryData_setPlutusScripts_v1 = self => plutus_scripts => () => self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
-export const auxiliaryData_setPlutusScripts_v2 = self => plutus_scripts => () => self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
-export const auxiliaryData_setPlutusScripts_v3 = self => plutus_scripts => () => self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
+export const auxiliaryData_plutusScripts_v1 = self =>
+  undefinedToPurs(self.plutus_scripts_v1.bind(self));
+export const auxiliaryData_plutusScripts_v2 = self =>
+  undefinedToPurs(self.plutus_scripts_v2.bind(self));
+export const auxiliaryData_plutusScripts_v3 = self =>
+  undefinedToPurs(self.plutus_scripts_v3.bind(self));
+export const auxiliaryData_setPlutusScripts_v1 = self => plutus_scripts => () =>
+  self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
+export const auxiliaryData_setPlutusScripts_v2 = self => plutus_scripts => () =>
+  self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
+export const auxiliaryData_setPlutusScripts_v3 = self => plutus_scripts => () =>
+  self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
 
 // AuxiliaryDataShelleyMa
 export const auxiliaryDataShelleyMa_new = metadata => native_scripts =>
-  CDL.AuxiliaryDataShelleyMa.new(
-    metadata,
-    native_scripts);
+  CDL.AuxiliaryDataShelleyMa.new(metadata, native_scripts);
 
 // AuxiliaryDataPostAlonzo
-export const auxiliaryDataPostAlonzo_new = metadata => native_scripts =>
-  plutus_scripts_v1 => plutus_scripts_v2 => plutus_scripts_v3 =>
+export const auxiliaryDataPostAlonzo_new =
+  metadata =>
+  native_scripts =>
+  plutus_scripts_v1 =>
+  plutus_scripts_v2 =>
+  plutus_scripts_v3 =>
     CDL.AuxiliaryDataPostAlonzo.new(
       metadata,
-      native_scripts, plutus_scripts_v1, plutus_scripts_v2, plutus_scripts_v3);
+      native_scripts,
+      plutus_scripts_v1,
+      plutus_scripts_v2,
+      plutus_scripts_v3
+    );
 
 // AuxiliaryDataHash
 export const auxiliaryDataHash_toBech32 = self => prefix =>
@@ -248,10 +263,12 @@ export const certificate_newVoteRegistrationAndDelegation =
 export const certificate_kind = self => self.kind.bind(self)();
 export const certificate_asStakeRegistration = self =>
   undefinedToPurs(self.as_stake_registration.bind(self));
-export const certificate_asRegCert = self => undefinedToPurs(self.as_reg_cert.bind(self));
+export const certificate_asRegCert = self =>
+  undefinedToPurs(self.as_reg_cert.bind(self));
 export const certificate_asStakeDeregistration = self =>
   undefinedToPurs(self.as_stake_deregistration.bind(self));
-export const certificate_asUnregCert = self => undefinedToPurs(self.as_unreg_cert.bind(self));
+export const certificate_asUnregCert = self =>
+  undefinedToPurs(self.as_unreg_cert.bind(self));
 export const certificate_asStakeDelegation = self =>
   undefinedToPurs(self.as_stake_delegation.bind(self));
 export const certificate_asPoolRegistration = self =>
@@ -366,23 +383,29 @@ export const costmdls_retainLanguageVersions = self => languages =>
 export const credential_fromKeyhash = hash => CDL.Credential.from_keyhash(hash);
 export const credential_fromScripthash = hash =>
   CDL.Credential.from_scripthash(hash);
-export const credential_toKeyhash = self => undefinedToPurs(self.to_keyhash.bind(self));
-export const credential_toScripthash = self => undefinedToPurs(self.to_scripthash.bind(self));
+export const credential_toKeyhash = self =>
+  undefinedToPurs(self.to_keyhash.bind(self));
+export const credential_toScripthash = self =>
+  undefinedToPurs(self.to_scripthash.bind(self));
 export const credential_kind = self => self.kind.bind(self)();
-export const credential_hasScriptHash = self => self.has_script_hash.bind(self)();
+export const credential_hasScriptHash = self =>
+  self.has_script_hash.bind(self)();
 
 // Credentials
 export const credentials_new = CDL.Credentials.new();
 
 // Data
 export const data_new = bytes => CDL.Data.new(bytes);
-export const data_encodedPlutusData = self => self.encoded_plutus_data.bind(self)();
+export const data_encodedPlutusData = self =>
+  self.encoded_plutus_data.bind(self)();
 
 // DataOption
 export const dataOption_newData = data => CDL.DataOption.new_data(data);
 export const dataOption_newHash = hash => CDL.DataOption.new_hash(hash);
-export const dataOption_asData = self => undefinedToPurs(self.as_data.bind(self));
-export const dataOption_asHash = self => undefinedToPurs(self.as_hash.bind(self));
+export const dataOption_asData = self =>
+  undefinedToPurs(self.as_data.bind(self));
+export const dataOption_asHash = self =>
+  undefinedToPurs(self.as_hash.bind(self));
 
 // DNSRecordAorAAAA
 export const dnsRecordAorAAAA_new = dns_name =>
@@ -402,8 +425,10 @@ export const dRep_newAlwaysNoConfidence = CDL.DRep.new_always_no_confidence();
 export const dRep_newFromCredential = cred =>
   CDL.DRep.new_from_credential(cred);
 export const dRep_kind = self => self.kind.bind(self)();
-export const dRep_toKeyHash = self => undefinedToPurs(self.as_key_hash.bind(self));
-export const dRep_toScriptHash = self => undefinedToPurs(self.as_script_hash.bind(self));
+export const dRep_toKeyHash = self =>
+  undefinedToPurs(self.as_key_hash.bind(self));
+export const dRep_toScriptHash = self =>
+  undefinedToPurs(self.as_script_hash.bind(self));
 export const dRep_toBech32 = self => self.to_bech32.bind(self)();
 export const dRep_fromBech32 = bech32_str =>
   errorableToPurs(CDL.DRep.from_bech32, bech32_str);
@@ -438,27 +463,27 @@ export const dRepUpdate_newWithAnchor = voting_credential => anchor =>
 // DRepVotingThresholds
 export const dRepVotingThresholds_new =
   motion_no_confidence =>
-    committee_normal =>
-      committee_no_confidence =>
-        update_constitution =>
-          hard_fork_initiation =>
-            pp_network_group =>
-              pp_economic_group =>
-                pp_technical_group =>
-                  pp_governance_group =>
-                    treasury_withdrawal =>
-                      CDL.DRepVotingThresholds.new(
-                        motion_no_confidence,
-                        committee_normal,
-                        committee_no_confidence,
-                        update_constitution,
-                        hard_fork_initiation,
-                        pp_network_group,
-                        pp_economic_group,
-                        pp_technical_group,
-                        pp_governance_group,
-                        treasury_withdrawal
-                      );
+  committee_normal =>
+  committee_no_confidence =>
+  update_constitution =>
+  hard_fork_initiation =>
+  pp_network_group =>
+  pp_economic_group =>
+  pp_technical_group =>
+  pp_governance_group =>
+  treasury_withdrawal =>
+    CDL.DRepVotingThresholds.new(
+      motion_no_confidence,
+      committee_normal,
+      committee_no_confidence,
+      update_constitution,
+      hard_fork_initiation,
+      pp_network_group,
+      pp_economic_group,
+      pp_technical_group,
+      pp_governance_group,
+      treasury_withdrawal
+    );
 export const dRepVotingThresholds_setMotionNoConfidence =
   self => motion_no_confidence => () =>
     self.set_motion_no_confidence.bind(self)(motion_no_confidence);
@@ -802,8 +827,8 @@ export const nativeScriptSource_getRefScriptSize = self =>
 export const nativeScripts_new = () => CDL.NativeScripts.new();
 
 // NetworkId
-export const networkId_testnet = CDL.NetworkId.new_testnet();
-export const networkId_mainnet = CDL.NetworkId.new_mainnet();
+export const networkId_testnet = CDL.NetworkId.testnet();
+export const networkId_mainnet = CDL.NetworkId.mainnet();
 export const networkId_kind = self => self.kind.bind(self)();
 
 // NetworkInfo
@@ -853,8 +878,10 @@ export const operationalCert_new =
 export const outputDatum_newDataHash = data_hash =>
   CDL.OutputDatum.new_data_hash(data_hash);
 export const outputDatum_newData = data => CDL.OutputDatum.new_data(data);
-export const outputDatum_dataHash = self => undefinedToPurs(self.as_data_hash.bind(self));
-export const outputDatum_data = self => undefinedToPurs(self.as_data.bind(self));
+export const outputDatum_dataHash = self =>
+  undefinedToPurs(self.as_data_hash.bind(self));
+export const outputDatum_data = self =>
+  undefinedToPurs(self.as_data.bind(self));
 
 // ParameterChangeAction
 export const parameterChangeAction_govActionId = self =>
@@ -886,7 +913,8 @@ export const parameterChangeAction_newWithPolicyHashAndActionId =
     );
 
 // PlutusData
-export const plutusData_fromBytes = bytes => errorableToPurs(CDL.PlutusData.from_bytes, bytes);
+export const plutusData_fromBytes = bytes =>
+  errorableToPurs(CDL.PlutusData.from_bytes, bytes);
 export const plutusData_newConstrPlutusData = constr_plutus_data =>
   CDL.PlutusData.new_constr_plutus_data(constr_plutus_data);
 export const plutusData_newEmptyConstrPlutusData = alternative =>
@@ -903,11 +931,15 @@ export const plutusData_newInteger = integer =>
   CDL.PlutusData.new_integer(integer);
 export const plutusData_newBytes = bytes => CDL.PlutusData.new_bytes(bytes);
 export const plutusData_kind = self => self.kind.bind(self)();
-export const plutusData_asConstrPlutusData = self => errorableToPurs(self.as_constr_plutus_data.bind(self));
+export const plutusData_asConstrPlutusData = self =>
+  errorableToPurs(self.as_constr_plutus_data.bind(self));
 export const plutusData_asMap = self => errorableToPurs(self.as_map.bind(self));
-export const plutusData_asList = self => errorableToPurs(self.as_list.bind(self));
-export const plutusData_asInteger = self => errorableToPurs(self.as_integer.bind(self));
-export const plutusData_asBytes = self => errorableToPurs(self.as_bytes.bind(self));
+export const plutusData_asList = self =>
+  errorableToPurs(self.as_list.bind(self));
+export const plutusData_asInteger = self =>
+  errorableToPurs(self.as_integer.bind(self));
+export const plutusData_asBytes = self =>
+  errorableToPurs(self.as_bytes.bind(self));
 export const plutusData_fromAddress = address =>
   CDL.PlutusData.from_address(address);
 export const plutusData_asAddress = self => network =>
@@ -927,8 +959,10 @@ export const plutusMapValues_new = CDL.PlutusMapValues.new();
 // PlutusScript
 export const plutusScript_new = bytes => CDL.PlutusScript.new(bytes);
 export const plutusScript_bytes = self => self.bytes.bind(self)();
-export const plutusScript_fromBytes = bytes => errorableToPurs(CDL.PlutusScript.from_bytes(bytes));
-export const plutusScript_fromHex = hex_str => errorableToPurs(CDL.PlutusScript.from_hex, hex_str);
+export const plutusScript_fromBytes = bytes =>
+  errorableToPurs(CDL.PlutusScript.from_bytes(bytes));
+export const plutusScript_fromHex = hex_str =>
+  errorableToPurs(CDL.PlutusScript.from_hex, hex_str);
 export const plutusScript_hash = self => number => self.hash(number);
 
 // PlutusScripts
@@ -973,25 +1007,25 @@ export const poolParams_relays = self => self.relays.bind(self)();
 export const poolParams_poolMetadata = self => self.pool_metadata.bind(self)();
 export const poolParams_new =
   operator =>
-    vrf_keyhash =>
-      pledge =>
-        cost =>
-          margin =>
-            reward_account =>
-              pool_owners =>
-                relays =>
-                  pool_metadata =>
-                    CDL.PoolParams.new(
-                      operator,
-                      vrf_keyhash,
-                      pledge,
-                      cost,
-                      margin,
-                      reward_account,
-                      pool_owners,
-                      relays,
-                      pool_metadata
-                    );
+  vrf_keyhash =>
+  pledge =>
+  cost =>
+  margin =>
+  reward_account =>
+  pool_owners =>
+  relays =>
+  pool_metadata =>
+    CDL.PoolParams.new(
+      operator,
+      vrf_keyhash,
+      pledge,
+      cost,
+      margin,
+      reward_account,
+      pool_owners,
+      relays,
+      pool_metadata
+    );
 
 // PoolRegistration
 export const poolRegistration_poolParams = self =>
@@ -1009,17 +1043,17 @@ export const poolRetirement_new = pool_keyhash => epoch =>
 // PoolVotingThresholds
 export const poolVotingThresholds_new =
   motion_no_confidence =>
-    committee_normal =>
-      committee_no_confidence =>
-        hard_fork_initiation =>
-          security_relevant_threshold =>
-            CDL.PoolVotingThresholds.new(
-              motion_no_confidence,
-              committee_normal,
-              committee_no_confidence,
-              hard_fork_initiation,
-              security_relevant_threshold
-            );
+  committee_normal =>
+  committee_no_confidence =>
+  hard_fork_initiation =>
+  security_relevant_threshold =>
+    CDL.PoolVotingThresholds.new(
+      motion_no_confidence,
+      committee_normal,
+      committee_no_confidence,
+      hard_fork_initiation,
+      security_relevant_threshold
+    );
 export const poolVotingThresholds_motionNoConfidence = self =>
   self.motion_no_confidence.bind(self)();
 export const poolVotingThresholds_committeeNormal = self =>
@@ -1328,10 +1362,14 @@ export const scriptRef_isNativeScript = self =>
   self.is_native_script.bind(self)();
 export const scriptRef_isPlutusScript = self =>
   self.is_plutus_script.bind(self)();
-export const scriptRef_nativeScript = self => undefinedToPurs(self.as_native_script.bind(self));
-export const scriptRef_plutusScript_v1 = self => undefinedToPurs(self.as_plutus_script_v1.bind(self));
-export const scriptRef_plutusScript_v2 = self => undefinedToPurs(self.as_plutus_script_v2.bind(self));
-export const scriptRef_plutusScript_v3 = self => undefinedToPurs(self.as_plutus_script_v3.bind(self));
+export const scriptRef_nativeScript = self =>
+  undefinedToPurs(self.as_native_script.bind(self));
+export const scriptRef_plutusScript_v1 = self =>
+  undefinedToPurs(self.as_plutus_script_v1.bind(self));
+export const scriptRef_plutusScript_v2 = self =>
+  undefinedToPurs(self.as_plutus_script_v2.bind(self));
+export const scriptRef_plutusScript_v3 = self =>
+  undefinedToPurs(self.as_plutus_script_v3.bind(self));
 export const scriptRef_toUnwrappedBytes = self =>
   self.to_unwrapped_bytes.bind(self)();
 
@@ -1581,10 +1619,12 @@ export const transactionMetadatumLabels_new = () =>
 // TransactionOutput
 export const transactionOutput_address = self => self.address.bind(self)();
 export const transactionOutput_amount = self => self.amount.bind(self)();
-export const transactionOutput_dataHash = self => undefinedToPurs(self.data_hash.bind(self));
+export const transactionOutput_dataHash = self =>
+  undefinedToPurs(self.data_hash.bind(self));
 export const transactionOutput_datumOption = self =>
   undefinedToPurs(self.datum_option.bind(self));
-export const transactionOutput_scriptRef = self => undefinedToPurs(self.script_ref.bind(self));
+export const transactionOutput_scriptRef = self =>
+  undefinedToPurs(self.script_ref.bind(self));
 export const transactionOutput_setScriptRef = self => script_ref => () =>
   self.set_script_ref.bind(self)(script_ref);
 export const transactionOutput_setDatumOption = self => datum => () =>
@@ -1626,12 +1666,21 @@ export const transactionWitnessSet_setBootstraps = self => bootstraps => () =>
   self.set_bootstraps.bind(self)(bootstraps);
 export const transactionWitnessSet_bootstraps = self =>
   self.bootstraps.bind(self)();
-export const transactionWitnessSet_setPlutusScripts_v1 = self => plutus_scripts => () => self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
-export const transactionWitnessSet_setPlutusScripts_v2 = self => plutus_scripts => () => self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
-export const transactionWitnessSet_setPlutusScripts_v3 = self => plutus_scripts => () => self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
-export const transactionWitnessSet_plutusScripts_v1 = self => undefinedToPurs(self.plutus_scripts_v1.bind(self));
-export const transactionWitnessSet_plutusScripts_v2 = self => undefinedToPurs(self.plutus_scripts_v2.bind(self));
-export const transactionWitnessSet_plutusScripts_v3 = self => undefinedToPurs(self.plutus_scripts_v3.bind(self));
+export const transactionWitnessSet_setPlutusScripts_v1 =
+  self => plutus_scripts => () =>
+    self.set_plutus_scripts_v1.bind(self)(plutus_scripts);
+export const transactionWitnessSet_setPlutusScripts_v2 =
+  self => plutus_scripts => () =>
+    self.set_plutus_scripts_v2.bind(self)(plutus_scripts);
+export const transactionWitnessSet_setPlutusScripts_v3 =
+  self => plutus_scripts => () =>
+    self.set_plutus_scripts_v3.bind(self)(plutus_scripts);
+export const transactionWitnessSet_plutusScripts_v1 = self =>
+  undefinedToPurs(self.plutus_scripts_v1.bind(self));
+export const transactionWitnessSet_plutusScripts_v2 = self =>
+  undefinedToPurs(self.plutus_scripts_v2.bind(self));
+export const transactionWitnessSet_plutusScripts_v3 = self =>
+  undefinedToPurs(self.plutus_scripts_v3.bind(self));
 export const transactionWitnessSet_setPlutusData = self => plutus_data => () =>
   self.set_plutus_data.bind(self)(plutus_data);
 export const transactionWitnessSet_plutusData = self =>
@@ -1779,10 +1828,14 @@ export const voter_kind = self => self.kind.bind(self)();
 export const voter_hasScriptCredentials = self =>
   self.has_script_credentials.bind(self)();
 
-export const voter_toConstitutionalCommitteeHotCredential = self => undefinedToPurs(self.to_constitutional_committee_hot_credential.bind(self));
-export const voter_toDrepCredential = self => undefinedToPurs(self.to_drep_credential.bind(self));
-export const voter_toStakePoolKeyHash = self => undefinedToPurs(self.to_staking_pool_key_hash.bind(self));
-export const voter_toKeyHash = self => undefinedToPurs(self.to_key_hash.bind(self));
+export const voter_toConstitutionalCommitteeHotCredential = self =>
+  undefinedToPurs(self.to_constitutional_committee_hot_credential.bind(self));
+export const voter_toDrepCredential = self =>
+  undefinedToPurs(self.to_drep_credential.bind(self));
+export const voter_toStakePoolKeyHash = self =>
+  undefinedToPurs(self.to_staking_pool_key_hash.bind(self));
+export const voter_toKeyHash = self =>
+  undefinedToPurs(self.to_key_hash.bind(self));
 
 // Voters
 export const voters_new = CDL.Voters.new();
@@ -1792,7 +1845,8 @@ export const votingProcedure_new = vote => CDL.VotingProcedure.new(vote);
 export const votingProcedure_newWithAnchor = vote => anchor =>
   CDL.VotingProcedure.new_with_anchor(vote, anchor);
 export const votingProcedure_voteKind = self => self.vote.bind(self)();
-export const votingProcedure_anchor = self => undefinedToPurs(self.anchor.bind(self));
+export const votingProcedure_anchor = self =>
+  undefinedToPurs(self.anchor.bind(self));
 
 // VotingProcedures
 export const votingProcedures_free = self =>
