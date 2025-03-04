@@ -257,10 +257,6 @@ module Cardano.Data.Lite
   , genesisHash_toBech32
   , genesisHash_fromBech32
   , genesisHashes_new
-  , genesisKeyDelegation_genesishash
-  , genesisKeyDelegation_genesisDelegateHash
-  , genesisKeyDelegation_vrfKeyhash
-  , genesisKeyDelegation_new
   , governanceAction_newParameterChangeAction
   , governanceAction_newHardForkInitiationAction
   , governanceAction_newTreasuryWithdrawalsAction
