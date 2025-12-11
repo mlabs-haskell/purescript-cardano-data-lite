@@ -176,12 +176,12 @@ module Cardano.Data.Lite
   , credential_kind
   , credential_hasScriptHash
   , credentials_new
- , data_new
- , data_encodedPlutusData
- , dataOption_newData
- , dataOption_newHash
- , dataOption_asData
- , dataOption_asHash
+  , data_new
+  , data_encodedPlutusData
+  , dataOption_newData
+  , dataOption_newHash
+  , dataOption_asData
+  , dataOption_asHash
   , dnsRecordAorAAAA_new
   , dnsRecordAorAAAA_record
   , dnsRecordSRV_new
@@ -1301,17 +1301,21 @@ instance Show AuxiliaryData where
 
 foreign import data AuxiliaryDataShelleyMa :: Type
 
-foreign import auxiliaryDataShelleyMa_new ::
-  GeneralTransactionMetadata -> NativeScripts
+foreign import auxiliaryDataShelleyMa_new
+  :: GeneralTransactionMetadata -> NativeScripts
 
 --------------------------------------------------------------------------------
 -- Auxiliary data Post Alonzo
 
 foreign import data AuxiliaryDataPostAlonzo :: Type
 
-foreign import auxiliaryDataPostAlonzo_new ::
-  GeneralTransactionMetadata -> NativeScripts ->
-  PlutusScripts -> PlutusScripts -> PlutusScripts -> AuxiliaryDataPostAlonzo
+foreign import auxiliaryDataPostAlonzo_new
+  :: GeneralTransactionMetadata
+  -> NativeScripts
+  -> PlutusScripts
+  -> PlutusScripts
+  -> PlutusScripts
+  -> AuxiliaryDataPostAlonzo
 
 --------------------------------------------------------------------------------
 -- Auxiliary data hash
@@ -2241,7 +2245,6 @@ instance DecodeAeson ExUnits where
 instance Show ExUnits where
   show = showViaJson
 
-
 --------------------------------------------------------------------------------
 -- General transaction metadata
 
@@ -3028,7 +3031,7 @@ instance Show ParameterChangeAction where
 
 foreign import data PlutusData :: Type
 
-foreign import plutusData_fromBytes :: ByteArray  -> Nullable PlutusData
+foreign import plutusData_fromBytes :: ByteArray -> Nullable PlutusData
 foreign import plutusData_newConstrPlutusData :: ConstrPlutusData -> PlutusData
 foreign import plutusData_newEmptyConstrPlutusData :: BigNum -> PlutusData
 foreign import plutusData_newSingleValueConstrPlutusData :: BigNum -> PlutusData -> PlutusData
@@ -3125,7 +3128,7 @@ foreign import data PlutusScript :: Type
 foreign import plutusScript_new :: ByteArray -> PlutusScript
 foreign import plutusScript_bytes :: PlutusScript -> ByteArray
 foreign import plutusScript_fromBytes :: ByteArray -> Nullable PlutusScript
-foreign import plutusScript_fromHex :: String ->  Nullable PlutusScript
+foreign import plutusScript_fromHex :: String -> Nullable PlutusScript
 foreign import plutusScript_hash :: PlutusScript -> Number -> ScriptHash
 
 instance IsCsl PlutusScript where

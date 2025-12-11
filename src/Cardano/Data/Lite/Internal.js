@@ -77,11 +77,10 @@ export const _cslFromJson = className => nothing => just => json => {
     return nothing;
   }
 };
-export const _cslToJson = (x) => {
-  if (x && typeof x.to_json === 'function') {
+export const _cslToJson = x => {
+  if (x && typeof x.to_json === "function") {
     return JSON.parse(x.to_json());
   } else {
     return JSON.parse(JSON.stringify(x));
   }
 };
-
