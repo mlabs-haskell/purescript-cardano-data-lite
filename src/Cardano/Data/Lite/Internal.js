@@ -1,4 +1,4 @@
-import * as csl from "@errfrom/cardano-data-lite";
+import * as csl from "@mlabs-haskell/cardano-data-lite";
 
 const clone = x => {
   // hotpatch for this 'use after free' in CSL:
