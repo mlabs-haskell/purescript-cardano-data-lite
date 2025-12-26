@@ -1,7 +1,7 @@
 "use strict";
 
 // eslint-disable-next-line no-unused-vars
-import * as CDL from "@mlabs-haskell/cardano-data-lite";
+import * as CDL from "@errfrom/cardano-data-lite";
 
 // Pass in a function and its list of arguments, that is expected to fail on evaluation, wraps in Either
 // eslint-disable-next-line no-unused-vars
